@@ -2,6 +2,7 @@ package vn.tale.noadapter;
 
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -15,7 +16,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<SimpleViewHolder> 
   private List<?> items;
   private final ItemViewMapping itemViewMapping;
 
-  public RecyclerViewAdapter(ItemViewMapping itemViewMapping) {
+  public RecyclerViewAdapter(@NonNull ItemViewMapping itemViewMapping) {
     this.itemViewMapping = itemViewMapping;
   }
 

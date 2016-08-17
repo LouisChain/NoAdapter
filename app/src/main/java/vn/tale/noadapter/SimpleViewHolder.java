@@ -1,6 +1,7 @@
 package vn.tale.noadapter;
 
 import android.databinding.ViewDataBinding;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -18,7 +19,7 @@ public class SimpleViewHolder extends RecyclerView.ViewHolder implements View.On
     this.binding = binding;
   }
 
-  public void bind(ItemViewMapping itemViewMapping, Object item) {
+  public void bind(@NonNull ItemViewMapping itemViewMapping, Object item) {
     this.itemViewMapping = itemViewMapping;
     this.item = item;
     binding.setVariable(vn.tale.noadapter.BR.item, item);
