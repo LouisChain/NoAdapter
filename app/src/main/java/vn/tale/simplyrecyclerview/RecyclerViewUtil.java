@@ -24,7 +24,7 @@ public final class RecyclerViewUtil {
     return this;
   }
 
-  public RecyclerViewUtil renderer(ItemViewMapping itemViewMapping) {
+  public RecyclerViewUtil mapping(ItemViewMapping itemViewMapping) {
     this.itemViewMapping = itemViewMapping;
     return this;
   }

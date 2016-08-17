@@ -8,6 +8,10 @@
       name="item"
       type="java.lang.String"/>
 
+    <variable
+      name="onClickListener"
+      type="android.view.View.OnClickListener"/>
+
   </data>
 
   <TextView
@@ -15,5 +19,6 @@
     android:layout_height="wrap_content"
     android:layout_margin="16dp"
     android:text="@{item}"
+    android:onClick="@{onClickListener.onClick}"
     />
 </layout>

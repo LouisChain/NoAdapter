@@ -4,8 +4,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.View;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 import vn.tale.simplyrecyclerview.Adapter;
 import vn.tale.simplyrecyclerview.ItemViewMapping;
@@ -24,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     final RecyclerView rvList = (RecyclerView) this.findViewById(R.id.rvList);
     final Adapter adapter = RecyclerViewUtil.with(rvList)
         .layoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false))
-        .renderer(new ItemViewMapping() {
+        .mapping(new ItemViewMapping() {
           @Override public int layoutForViewType(int viewType) {
             switch (viewType) {
               case 1:
@@ -40,36 +43,25 @@ public class MainActivity extends AppCompatActivity {
             }
             return 2;
           }
+
+          @Override public void onClick(View view, Object item) {
+            Log.d(TAG, "onClick: View: " + view + ", item: " + item);
+          }
         })
         .build();
-//    rvList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-//    final RecyclerViewAdapter adapter = new RecyclerViewAdapter(new Renderer() {
-//      @Override public int layoutForViewType(int type) {
-//        switch (type) {
-//          case 1:
-//            return R.layout.item_header;
-//          default:
-//            return R.layout.item_name;
-//        }
-//      }
-//
-//      @Override public int viewTypeForItem(Object item) {
-//        if (item instanceof Header) {
-//          return 1;
-//        }
-//        return 2;
-//      }
-//    });
-//    rvList.setAdapter(adapter);
-    adapter.setItems(Arrays.asList(
-        new Header("Header 1"),
-        "Item 1",
-        "Item 2",
-        "Item 3",
-        new Header("Header 2"),
-        "Item 5",
-        "Item 6",
-        "Item 7"
-    ));
+    adapter.setItems(generate(100));
+
+  }
+
+  static List<Object> generate(int size) {
+    final List<Object> result = new ArrayList<>(size);
+    for (int i = 0; i < size; i++) {
+      if (i % 5 == 0) {
+        result.add(new Header("Header " + i));
+      } else {
+        result.add("Item " + i);
+      }
+    }
+    return result;
   }
 }

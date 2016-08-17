@@ -38,7 +38,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<SimpleViewHolder> 
 
   @Override public void onBindViewHolder(SimpleViewHolder holder, int position) {
     final Object item = items.get(position);
-    holder.setItem(item);
+    holder.bind(itemViewMapping, item);
   }
 
   @Override public int getItemCount() {
