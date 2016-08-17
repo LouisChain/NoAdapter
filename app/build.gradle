@@ -5,7 +5,7 @@ android {
   buildToolsVersion "24.0.0"
 
   defaultConfig {
-    applicationId "vn.tale.simplyrecyclerview"
+    applicationId "vn.tale.noadapter"
     minSdkVersion 15
     targetSdkVersion 24
     versionCode 1

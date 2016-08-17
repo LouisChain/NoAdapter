@@ -1,4 +1,4 @@
-package vn.tale.simplyrecyclerview.ui;
+package vn.tale.noadapter.ui;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,12 +10,12 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
-import vn.tale.simplyrecyclerview.Adapter;
-import vn.tale.simplyrecyclerview.ItemViewMapping;
-import vn.tale.simplyrecyclerview.R;
-import vn.tale.simplyrecyclerview.RecyclerViewUtil;
-import vn.tale.simplyrecyclerview.model.Header;
-import vn.tale.simplyrecyclerview.model.User;
+import vn.tale.noadapter.Adapter;
+import vn.tale.noadapter.ItemViewMapping;
+import vn.tale.noadapter.R;
+import vn.tale.noadapter.RecyclerViewUtil;
+import vn.tale.noadapter.model.Header;
+import vn.tale.noadapter.model.User;
 
 public class MainActivity extends AppCompatActivity {
 

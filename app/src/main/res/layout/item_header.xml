@@ -6,7 +6,7 @@
 
     <variable
       name="item"
-      type="vn.tale.simplyrecyclerview.model.Header"/>
+      type="vn.tale.noadapter.model.Header"/>
 
   </data>
 

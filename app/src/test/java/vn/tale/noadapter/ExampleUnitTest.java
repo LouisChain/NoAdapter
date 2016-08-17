@@ -1,4 +1,4 @@
-package vn.tale.simplyrecyclerview;
+package vn.tale.noadapter;
 
 import org.junit.Test;
 

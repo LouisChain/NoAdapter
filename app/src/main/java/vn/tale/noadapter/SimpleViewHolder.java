@@ -1,4 +1,4 @@
-package vn.tale.simplyrecyclerview;
+package vn.tale.noadapter;
 
 import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;
@@ -21,8 +21,8 @@ public class SimpleViewHolder extends RecyclerView.ViewHolder implements View.On
   public void bind(ItemViewMapping itemViewMapping, Object item) {
     this.itemViewMapping = itemViewMapping;
     this.item = item;
-    binding.setVariable(vn.tale.simplyrecyclerview.BR.item, item);
-    binding.setVariable(vn.tale.simplyrecyclerview.BR.onClickListener, this);
+    binding.setVariable(vn.tale.noadapter.BR.item, item);
+    binding.setVariable(vn.tale.noadapter.BR.onClickListener, this);
   }
 
   @Override public void onClick(View view) {

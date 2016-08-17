@@ -1,4 +1,4 @@
-package vn.tale.simplyrecyclerview;
+package vn.tale.noadapter;
 
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;

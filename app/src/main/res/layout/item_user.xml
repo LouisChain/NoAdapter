@@ -7,7 +7,7 @@
 
     <variable
       name="item"
-      type="vn.tale.simplyrecyclerview.model.User"/>
+      type="vn.tale.noadapter.model.User"/>
 
     <variable
       name="onClickListener"
@@ -15,11 +15,11 @@
 
   </data>
 
-  <vn.tale.simplyrecyclerview.widget.CustomFrameLayout
+  <vn.tale.noadapter.widget.CustomFrameLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <vn.tale.simplyrecyclerview.widget.CustomViewGroup
+    <vn.tale.noadapter.widget.CustomViewGroup
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:orientation="vertical"
@@ -35,11 +35,11 @@
       <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="@{onClickListener.onClick}"
+        android:onClick="@{onClickListener::onClick}"
         android:text="@{item.link}"
         tools:text="Link"
         />
-    </vn.tale.simplyrecyclerview.widget.CustomViewGroup>
-  </vn.tale.simplyrecyclerview.widget.CustomFrameLayout>
+    </vn.tale.noadapter.widget.CustomViewGroup>
+  </vn.tale.noadapter.widget.CustomFrameLayout>
 
 </layout>

@@ -1,4 +1,4 @@
-package vn.tale.simplyrecyclerview.model;
+package vn.tale.noadapter.model;
 
 /**
  * Created by Giang Nguyen on 8/14/16.

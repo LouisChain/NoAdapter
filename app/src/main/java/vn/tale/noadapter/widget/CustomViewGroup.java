@@ -1,4 +1,4 @@
-package vn.tale.simplyrecyclerview.widget;
+package vn.tale.noadapter.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
