@@ -15,6 +15,7 @@ import vn.tale.simplyrecyclerview.ItemViewMapping;
 import vn.tale.simplyrecyclerview.R;
 import vn.tale.simplyrecyclerview.RecyclerViewUtil;
 import vn.tale.simplyrecyclerview.model.Header;
+import vn.tale.simplyrecyclerview.model.User;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
             switch (viewType) {
               case 1:
                 return R.layout.item_header;
+              case 2:
+                return R.layout.item_user;
               default:
                 return R.layout.item_name;
             }
@@ -40,8 +43,10 @@ public class MainActivity extends AppCompatActivity {
           @Override public int viewTypeForItem(Object item) {
             if (item instanceof Header) {
               return 1;
+            } else if (item instanceof User) {
+              return 2;
             }
-            return 2;
+            return 0;
           }
 
           @Override public void onClick(View view, Object item) {
@@ -58,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
     for (int i = 0; i < size; i++) {
       if (i % 5 == 0) {
         result.add(new Header("Header " + i));
+      } else if (i == 22) {
+        result.add(new User("User " + i, "Link: " + i));
       } else {
         result.add("Item " + i);
       }
