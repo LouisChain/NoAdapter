@@ -19,7 +19,7 @@ class OnlyViewHolder extends RecyclerView.ViewHolder implements View.OnClickList
   }
 
   void bind(Object item) {
-    binding.setVariable(vn.tale.noadapter.BR.item, item);
+    binding.setVariable(vn.tiki.noadapter.BR.item, item);
     this.item = item;
   }
 
@@ -28,7 +28,7 @@ class OnlyViewHolder extends RecyclerView.ViewHolder implements View.OnClickList
     if (onItemClickListener == null) {
       return;
     }
-    binding.setVariable(vn.tale.noadapter.BR.onClick, this);
+    binding.setVariable(vn.tiki.noadapter.BR.onClick, this);
   }
 
   @Override

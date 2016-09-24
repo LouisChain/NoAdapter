@@ -19,7 +19,8 @@ public class OnlyAdapter extends RecyclerView.Adapter<OnlyViewHolder> {
   private ViewHolderCallback viewHolderCallback;
   private OnItemClickListener onItemClickListener;
 
-  public OnlyAdapter(@NonNull TypeDeterminer typeDeterminer, @NonNull LayoutSelector layoutSelector) {
+  public OnlyAdapter(@NonNull TypeDeterminer typeDeterminer,
+                     @NonNull LayoutSelector layoutSelector) {
     this.typeDeterminer = typeDeterminer;
     this.layoutSelector = layoutSelector;
   }
