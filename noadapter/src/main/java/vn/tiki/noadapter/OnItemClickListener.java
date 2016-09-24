@@ -1,0 +1,18 @@
+package vn.tiki.noadapter;
+
+import android.view.View;
+
+/**
+ * Created by Giang Nguyen on 9/24/16.
+ */
+
+public interface OnItemClickListener {
+  /**
+   * Callback that will be called when item clicked.
+   *
+   * @param view     view in item that is clicked.
+   * @param o        data of item
+   * @param position position of the item
+   */
+  void onItemClick(View view, Object o, int position);
+}
