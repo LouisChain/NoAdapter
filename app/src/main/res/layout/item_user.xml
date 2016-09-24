@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+    <variable
+      name="item"
+      type="vn.tale.noadapter.model.User"/>
+
+    <variable
+      name="onClickListener"
+      type="android.view.View.OnClickListener"/>
+
+  </data>
+
+  <vn.tale.noadapter.widget.CustomFrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <vn.tale.noadapter.widget.CustomViewGroup
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      android:padding="16dp">
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@{item.name}"
+        tools:text="Name"
+        />
+
+      <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="@{onClickListener::onClick}"
+        android:text="@{item.link}"
+        tools:text="Link"
+        />
+    </vn.tale.noadapter.widget.CustomViewGroup>
+  </vn.tale.noadapter.widget.CustomFrameLayout>
+
+</layout>

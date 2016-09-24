@@ -1,4 +1,4 @@
-package vn.tale.noadapter.sample;
+package vn.tiki.noadapter.sample;
 
 import org.junit.Test;
 
