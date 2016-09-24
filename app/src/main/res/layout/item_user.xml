@@ -7,7 +7,7 @@
 
     <variable
       name="item"
-      type="vn.tale.noadapter.model.User"/>
+      type="vn.tiki.noadapter.sample.sample.model.User"/>
 
     <variable
       name="onClickListener"
@@ -15,31 +15,26 @@
 
   </data>
 
-  <vn.tale.noadapter.widget.CustomFrameLayout
+  <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
 
-    <vn.tale.noadapter.widget.CustomViewGroup
+    <TextView
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:orientation="vertical"
-      android:padding="16dp">
+      android:text="@{item.name}"
+      tools:text="Name"
+      />
 
-      <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@{item.name}"
-        tools:text="Name"
-        />
-
-      <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="@{onClickListener::onClick}"
-        android:text="@{item.link}"
-        tools:text="Link"
-        />
-    </vn.tale.noadapter.widget.CustomViewGroup>
-  </vn.tale.noadapter.widget.CustomFrameLayout>
+    <Button
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:onClick="@{onClickListener::onClick}"
+      android:text="@{item.link}"
+      tools:text="Link"
+      />
+  </LinearLayout>
 
 </layout>

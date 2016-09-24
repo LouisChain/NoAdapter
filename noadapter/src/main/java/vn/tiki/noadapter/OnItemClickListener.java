@@ -11,8 +11,8 @@ public interface OnItemClickListener {
    * Callback that will be called when item clicked.
    *
    * @param view     view in item that is clicked.
-   * @param o        data of item
+   * @param item        data of item
    * @param position position of the item
    */
-  void onItemClick(View view, Object o, int position);
+  void onItemClick(View view, Object item, int position);
 }

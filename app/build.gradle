@@ -4,12 +4,15 @@ android {
   compileSdkVersion rootProject.ext.compileSdkVersion
   buildToolsVersion rootProject.ext.buildToolsVersion
   defaultConfig {
-    applicationId "vn.tale.noadapter.sample"
+    applicationId "vn.tiki.noadapter.sample"
     minSdkVersion rootProject.ext.minSdkVersion
     targetSdkVersion 24
     versionCode 1
     versionName "1.0"
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+  }
+  dataBinding {
+    enabled true
   }
   buildTypes {
     release {

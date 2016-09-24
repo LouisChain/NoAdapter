@@ -25,11 +25,11 @@ public class OnlyAdapter extends RecyclerView.Adapter<OnlyViewHolder> {
     this.layoutSelector = layoutSelector;
   }
 
-  void setOnItemClickListener(@NonNull OnItemClickListener onItemClickListener) {
+  private void setOnItemClickListener(@NonNull OnItemClickListener onItemClickListener) {
     this.onItemClickListener = onItemClickListener;
   }
 
-  void setViewHolderCallback(@NonNull ViewHolderCallback viewHolderCallback) {
+  private void setViewHolderCallback(@NonNull ViewHolderCallback viewHolderCallback) {
     this.viewHolderCallback = viewHolderCallback;
   }
 
@@ -72,6 +72,7 @@ public class OnlyAdapter extends RecyclerView.Adapter<OnlyViewHolder> {
     private LayoutSelector layoutSelector;
     private TypeDeterminer typeDeterminer;
     private OnItemClickListener onItemClickListener;
+    private ViewHolderCallback viewHolderCallback;
 
     public Builder typeDeterminer(TypeDeterminer typeDeterminer) {
       this.typeDeterminer = typeDeterminer;
@@ -88,10 +89,18 @@ public class OnlyAdapter extends RecyclerView.Adapter<OnlyViewHolder> {
       return this;
     }
 
+    public Builder viewHolderCallback(ViewHolderCallback viewHolderCallback) {
+      this.viewHolderCallback = viewHolderCallback;
+      return this;
+    }
+
     public OnlyAdapter build() {
       final OnlyAdapter adapter = new OnlyAdapter(typeDeterminer, layoutSelector);
       if (onItemClickListener != null) {
         adapter.setOnItemClickListener(onItemClickListener);
+      }
+      if (viewHolderCallback != null) {
+        adapter.setViewHolderCallback(viewHolderCallback);
       }
       return adapter;
     }
