@@ -1,4 +1,4 @@
-package vn.tale.noadapter;
+package vn.tiki.noadapter.sample.sample;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
