@@ -14,8 +14,8 @@ import vn.tiki.noadapter.LayoutSelector;
 import vn.tiki.noadapter.OnItemClickListener;
 import vn.tiki.noadapter.OnlyAdapter;
 import vn.tiki.noadapter.TypeDeterminer;
-import vn.tiki.noadapter.sample.sample.model.Header;
-import vn.tiki.noadapter.sample.sample.model.User;
+import vn.tiki.noadapter.sample.sample.entity.Header;
+import vn.tiki.noadapter.sample.sample.entity.User;
 
 public class MainActivity extends AppCompatActivity {
 

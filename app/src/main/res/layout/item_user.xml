@@ -7,7 +7,7 @@
 
     <variable
       name="item"
-      type="vn.tiki.noadapter.sample.sample.model.User"/>
+      type="vn.tiki.noadapter.sample.sample.entity.User"/>
 
     <variable
       name="onClickListener"

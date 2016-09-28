@@ -1,4 +1,4 @@
-package vn.tiki.noadapter.sample.sample.model;
+package vn.tiki.noadapter.sample.sample.entity;
 
 /**
  * Created by Giang Nguyen on 8/14/16.
