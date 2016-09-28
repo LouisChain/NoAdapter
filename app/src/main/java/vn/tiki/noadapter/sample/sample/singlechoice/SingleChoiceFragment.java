@@ -22,7 +22,7 @@ import vn.tiki.noadapter.LayoutSelector;
 import vn.tiki.noadapter.OnItemClickListener;
 import vn.tiki.noadapter.OnlyAdapter;
 import vn.tiki.noadapter.sample.R;
-import vn.tiki.noadapter.sample.sample.entity.Option;
+import vn.tiki.noadapter.sample.entity.Option;
 
 
 /**
