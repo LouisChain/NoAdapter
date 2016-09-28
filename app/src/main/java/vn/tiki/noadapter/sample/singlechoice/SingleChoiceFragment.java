@@ -1,4 +1,4 @@
-package vn.tiki.noadapter.sample.sample.singlechoice;
+package vn.tiki.noadapter.sample.singlechoice;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

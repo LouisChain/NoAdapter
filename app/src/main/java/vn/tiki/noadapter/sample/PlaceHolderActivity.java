@@ -1,4 +1,4 @@
-package vn.tiki.noadapter.sample.sample;
+package vn.tiki.noadapter.sample;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,8 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-import vn.tiki.noadapter.sample.R;
-import vn.tiki.noadapter.sample.sample.singlechoice.SingleChoiceFragment;
+import vn.tiki.noadapter.sample.singlechoice.SingleChoiceFragment;
 
 /**
  * Created by Giang Nguyen on 9/28/16.
