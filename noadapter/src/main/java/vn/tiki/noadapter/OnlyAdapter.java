@@ -95,6 +95,13 @@ public class OnlyAdapter extends RecyclerView.Adapter<OnlyViewHolder> {
     }
 
     public OnlyAdapter build() {
+      if (typeDeterminer == null) {
+        typeDeterminer = new TypeDeterminer() {
+          @Override public int typeOfItem(Object item) {
+            return 0;
+          }
+        };
+      }
       final OnlyAdapter adapter = new OnlyAdapter(typeDeterminer, layoutSelector);
       if (onItemClickListener != null) {
         adapter.setOnItemClickListener(onItemClickListener);

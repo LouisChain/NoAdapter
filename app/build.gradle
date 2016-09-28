@@ -29,5 +29,7 @@ dependencies {
   })
   compile rootProject.ext.appCompatV7
   compile rootProject.ext.noAdapter
+  compile rootProject.ext.ixJava
+  compile rootProject.ext.adapterCommands
   testCompile rootProject.ext.junit
 }

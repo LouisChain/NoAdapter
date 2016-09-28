@@ -6,5 +6,8 @@ ext {
   recyclerViewV7 = 'com.android.support:recyclerview-v7:24.2.1'
   junit = 'junit:junit:4.12'
   espressoCore = 'com.android.support.test.espresso:espresso-core:2.2.2'
+  ixJava = 'com.github.akarnokd:ixjava:1.0.0-RC3'
+  adapterCommands = 'com.hannesdorfmann.adaptercommands:adaptercommands:1.0.3'
+
   noAdapter = project(':noadapter')
 }
