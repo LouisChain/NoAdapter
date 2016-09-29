@@ -17,5 +17,10 @@
     android:layout_height="wrap_content"
     android:text="Single Choice"
     android:onClick="showSingleChoice"/>
+  <Button
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Custom Listener"
+    android:onClick="showCustomListener"/>
 
 </LinearLayout>

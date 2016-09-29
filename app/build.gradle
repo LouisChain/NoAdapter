@@ -6,7 +6,7 @@ android {
   defaultConfig {
     applicationId "vn.tiki.noadapter.sample"
     minSdkVersion rootProject.ext.minSdkVersion
-    targetSdkVersion 24
+    targetSdkVersion rootProject.ext.compileSdkVersion
     versionCode 1
     versionName "1.0"
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -31,5 +31,7 @@ dependencies {
   compile rootProject.ext.noAdapter
   compile rootProject.ext.ixJava
   compile rootProject.ext.adapterCommands
+  compile rootProject.ext.rxAndroid
+  compile rootProject.ext.rxJava
   testCompile rootProject.ext.junit
 }
