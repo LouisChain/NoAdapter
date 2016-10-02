@@ -12,15 +12,20 @@ class OnlyViewHolder extends RecyclerView.ViewHolder implements View.OnClickList
   private final ViewDataBinding binding;
   private Object item;
   private OnItemClickListener onItemClickListener;
+  private CustomBinding customBinding;
 
-  OnlyViewHolder(ViewDataBinding binding) {
+  OnlyViewHolder(ViewDataBinding binding, CustomBinding customBinding) {
     super(binding.getRoot());
     this.binding = binding;
+    this.customBinding = customBinding;
   }
 
   void bind(Object item) {
-    binding.setVariable(vn.tiki.noadapter.BR.item, item);
     this.item = item;
+    binding.setVariable(vn.tiki.noadapter.BR.item, item);
+    if (customBinding != null) {
+      customBinding.onBind(binding, item, getAdapterPosition());
+    }
   }
 
   void setOnItemClickListener(OnItemClickListener onItemClickListener) {

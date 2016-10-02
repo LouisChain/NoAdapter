@@ -11,5 +11,5 @@ public interface TypeDeterminer {
    * @param item the item
    * @return unique id for object
    */
-  int typeOfItem(Object item);
+  int typeOf(Object item);
 }

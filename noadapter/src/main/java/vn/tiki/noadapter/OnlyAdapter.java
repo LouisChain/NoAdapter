@@ -16,11 +16,11 @@ public class OnlyAdapter extends RecyclerView.Adapter<OnlyViewHolder> {
   private final TypeDeterminer typeDeterminer;
   private final LayoutSelector layoutSelector;
   private List<?> items;
-  private ViewHolderCallback viewHolderCallback;
   private OnItemClickListener onItemClickListener;
+  private CustomBinding customBinding;
 
-  public OnlyAdapter(@NonNull TypeDeterminer typeDeterminer,
-                     @NonNull LayoutSelector layoutSelector) {
+  private OnlyAdapter(@NonNull TypeDeterminer typeDeterminer,
+                      @NonNull LayoutSelector layoutSelector) {
     this.typeDeterminer = typeDeterminer;
     this.layoutSelector = layoutSelector;
   }
@@ -29,8 +29,8 @@ public class OnlyAdapter extends RecyclerView.Adapter<OnlyViewHolder> {
     this.onItemClickListener = onItemClickListener;
   }
 
-  private void setViewHolderCallback(@NonNull ViewHolderCallback viewHolderCallback) {
-    this.viewHolderCallback = viewHolderCallback;
+  private void setCustomBinding(@NonNull CustomBinding customBinding) {
+    this.customBinding = customBinding;
   }
 
   public void setItems(List<?> items) {
@@ -42,13 +42,13 @@ public class OnlyAdapter extends RecyclerView.Adapter<OnlyViewHolder> {
     final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
     final int layoutId = layoutSelector.layoutForType(viewType);
     final ViewDataBinding binding = DataBindingUtil.inflate(inflater, layoutId, parent, false);
-    return new OnlyViewHolder(binding);
+    return new OnlyViewHolder(binding, customBinding);
   }
 
   @Override
   public int getItemViewType(int position) {
     final Object item = items.get(position);
-    return typeDeterminer.typeOfItem(item);
+    return typeDeterminer.typeOf(item);
   }
 
   @Override
@@ -56,10 +56,6 @@ public class OnlyAdapter extends RecyclerView.Adapter<OnlyViewHolder> {
     final Object item = items.get(position);
     holder.bind(item);
     holder.setOnItemClickListener(onItemClickListener);
-
-    if (viewHolderCallback != null) {
-      viewHolderCallback.onBind(position, item);
-    }
   }
 
   @Override
@@ -72,7 +68,7 @@ public class OnlyAdapter extends RecyclerView.Adapter<OnlyViewHolder> {
     private LayoutSelector layoutSelector;
     private TypeDeterminer typeDeterminer;
     private OnItemClickListener onItemClickListener;
-    private ViewHolderCallback viewHolderCallback;
+    private CustomBinding customBinding;
 
     public Builder typeDeterminer(TypeDeterminer typeDeterminer) {
       this.typeDeterminer = typeDeterminer;
@@ -89,25 +85,28 @@ public class OnlyAdapter extends RecyclerView.Adapter<OnlyViewHolder> {
       return this;
     }
 
-    public Builder viewHolderCallback(ViewHolderCallback viewHolderCallback) {
-      this.viewHolderCallback = viewHolderCallback;
+    public Builder customBinding(@NonNull CustomBinding customBinding) {
+      this.customBinding = customBinding;
       return this;
     }
 
     public OnlyAdapter build() {
       if (typeDeterminer == null) {
         typeDeterminer = new TypeDeterminer() {
-          @Override public int typeOfItem(Object item) {
+          @Override public int typeOf(Object item) {
             return 0;
           }
         };
+      }
+      if (layoutSelector == null) {
+        throw new NullPointerException("Null layoutSelector");
       }
       final OnlyAdapter adapter = new OnlyAdapter(typeDeterminer, layoutSelector);
       if (onItemClickListener != null) {
         adapter.setOnItemClickListener(onItemClickListener);
       }
-      if (viewHolderCallback != null) {
-        adapter.setViewHolderCallback(viewHolderCallback);
+      if (customBinding != null) {
+        adapter.setCustomBinding(customBinding);
       }
       return adapter;
     }
