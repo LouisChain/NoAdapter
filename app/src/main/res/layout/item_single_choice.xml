@@ -5,7 +5,7 @@
 
     <variable
       name="item"
-      type="vn.tiki.noadapter.sample.entity.Option"/>
+      type="vn.tiki.noadapter2.sample.entity.Option"/>
 
     <variable
       name="onClick"
