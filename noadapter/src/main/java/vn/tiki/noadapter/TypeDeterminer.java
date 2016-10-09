@@ -1,4 +1,4 @@
-package vn.tiki.noadapter2;
+package vn.tiki.noadapter;
 
 /**
  * Created by Giang Nguyen on 9/24/16.

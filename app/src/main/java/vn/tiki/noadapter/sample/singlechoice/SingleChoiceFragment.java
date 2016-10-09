@@ -1,4 +1,4 @@
-package vn.tiki.noadapter2.sample.singlechoice;
+package vn.tiki.noadapter.sample.singlechoice;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,11 +18,11 @@ import com.hannesdorfmann.adaptercommands.command.DiffCommandsCalculator;
 import java.util.Arrays;
 import java.util.List;
 
-import vn.tiki.noadapter2.LayoutSelector;
-import vn.tiki.noadapter2.OnItemClickListener;
-import vn.tiki.noadapter2.OnlyAdapter;
-import vn.tiki.noadapter2.sample.R;
-import vn.tiki.noadapter2.sample.entity.Option;
+import vn.tiki.noadapter.LayoutSelector;
+import vn.tiki.noadapter.OnItemClickListener;
+import vn.tiki.noadapter.OnlyAdapter;
+import vn.tiki.noadapter.sample.R;
+import vn.tiki.noadapter.sample.entity.Option;
 
 
 /**
@@ -32,16 +32,18 @@ import vn.tiki.noadapter2.sample.entity.Option;
 public class SingleChoiceFragment extends Fragment {
 
   private static final String TAG = "SingleChoiceFragment";
-
+  private final DiffCommandsCalculator<Option> diffCommandsCalculator =
+      new DiffCommandsCalculator<>(new ItemChangedDetector<Option>() {
+        @Override public boolean hasChanged(Option oldItem, Option newItem) {
+          return oldItem.isSelected() != newItem.isSelected();
+        }
+      });
   private OnlyAdapter adapter;
   private AdapterCommandProcessor commandProcessor;
-  private final DiffCommandsCalculator<Option> diffCommandsCalculator = new DiffCommandsCalculator<>(new ItemChangedDetector<Option>() {
-    @Override public boolean hasChanged(Option oldItem, Option newItem) {
-      return oldItem.isSelected() != newItem.isSelected();
-    }
-  });
 
-  @Nullable @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+  @Nullable @Override public View onCreateView(LayoutInflater inflater,
+                                               @Nullable ViewGroup container,
+                                               @Nullable Bundle savedInstanceState) {
     return inflater.inflate(R.layout.list_fragment, container, false);
   }
 

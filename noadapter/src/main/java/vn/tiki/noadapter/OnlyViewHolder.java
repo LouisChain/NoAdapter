@@ -1,4 +1,4 @@
-package vn.tiki.noadapter2;
+package vn.tiki.noadapter;
 
 import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;
@@ -22,7 +22,7 @@ class OnlyViewHolder extends RecyclerView.ViewHolder implements View.OnClickList
 
   void bind(Object item) {
     this.item = item;
-    binding.setVariable(vn.tiki.noadapter2.BR.item, item);
+    binding.setVariable(vn.tiki.noadapter.BR.item, item);
     if (extraBinding != null) {
       extraBinding.onBind(binding, item, getAdapterPosition());
     }
@@ -33,7 +33,7 @@ class OnlyViewHolder extends RecyclerView.ViewHolder implements View.OnClickList
     if (onItemClickListener == null) {
       return;
     }
-    binding.setVariable(vn.tiki.noadapter2.BR.onClick, this);
+    binding.setVariable(vn.tiki.noadapter.BR.onClick, this);
   }
 
   @Override

@@ -1,4 +1,4 @@
-package vn.tiki.noadapter2.sample.custom_listener;
+package vn.tiki.noadapter.sample.custom_listener;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,10 +11,12 @@ import android.view.ViewGroup;
 
 import java.util.Arrays;
 
-import vn.tiki.noadapter2.LayoutSelector;
-import vn.tiki.noadapter2.OnlyAdapter;
-import vn.tiki.noadapter2.sample.R;
-import vn.tiki.noadapter2.sample.entity.ItemValueViewModel;
+import vn.tiki.noadapter.LayoutSelector;
+import vn.tiki.noadapter.OnlyAdapter;
+import vn.tiki.noadapter.sample.R;
+import vn.tiki.noadapter.sample.entity.ItemValueViewModel;
+
+import static java.security.AccessController.getContext;
 
 /**
  * Created by Giang Nguyen on 9/29/16.
@@ -22,7 +24,9 @@ import vn.tiki.noadapter2.sample.entity.ItemValueViewModel;
 
 public class CustomListenerFragment extends Fragment {
 
-  @Nullable @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+  @Nullable @Override public View onCreateView(LayoutInflater inflater,
+                                               @Nullable ViewGroup container,
+                                               @Nullable Bundle savedInstanceState) {
     return inflater.inflate(R.layout.list_fragment, container, false);
   }
 

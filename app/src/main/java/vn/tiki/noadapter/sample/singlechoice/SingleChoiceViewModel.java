@@ -1,10 +1,10 @@
-package vn.tiki.noadapter2.sample.singlechoice;
+package vn.tiki.noadapter.sample.singlechoice;
 
 import java.util.List;
 
 import ix.Ix;
 import ix.IxFunction;
-import vn.tiki.noadapter2.sample.entity.Option;
+import vn.tiki.noadapter.sample.entity.Option;
 
 /**
  * Created by Giang Nguyen on 9/28/16.

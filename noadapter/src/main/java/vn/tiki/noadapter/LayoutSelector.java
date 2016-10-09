@@ -1,4 +1,4 @@
-package vn.tiki.noadapter2;
+package vn.tiki.noadapter;
 
 import android.support.annotation.LayoutRes;
 

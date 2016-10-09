@@ -1,4 +1,4 @@
-package vn.tiki.noadapter2;
+package vn.tiki.noadapter;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

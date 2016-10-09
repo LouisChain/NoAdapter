@@ -1,11 +1,11 @@
-package vn.tiki.noadapter2.sample;
+package vn.tiki.noadapter.sample;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import vn.tiki.noadapter2.sample.custom_listener.CustomListenerFragment;
-import vn.tiki.noadapter2.sample.singlechoice.SingleChoiceFragment;
+import vn.tiki.noadapter.sample.custom_listener.CustomListenerFragment;
+import vn.tiki.noadapter.sample.singlechoice.SingleChoiceFragment;
 
 public class MainActivity extends AppCompatActivity {
 

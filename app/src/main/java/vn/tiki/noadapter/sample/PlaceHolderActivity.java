@@ -1,4 +1,4 @@
-package vn.tiki.noadapter2.sample;
+package vn.tiki.noadapter.sample;
 
 import android.content.Context;
 import android.content.Intent;
@@ -26,7 +26,8 @@ public class PlaceHolderActivity extends AppCompatActivity {
     setContentView(R.layout.activity_placeholder);
 
     if (savedInstanceState == null) {
-      final Class<? extends Fragment> fragmentClass = (Class<? extends Fragment>) getIntent().getSerializableExtra("fragmentClass");
+      final Class<? extends Fragment> fragmentClass =
+          (Class<? extends Fragment>) getIntent().getSerializableExtra("fragmentClass");
       try {
         final Fragment fragment = fragmentClass.newInstance();
         getSupportFragmentManager()

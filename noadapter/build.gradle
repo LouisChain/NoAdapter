@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 
-group='vn.tiki.noadapter2'
+group='vn.tiki.noadapter'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
