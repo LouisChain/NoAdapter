@@ -17,7 +17,7 @@ public class OnlyAdapter extends RecyclerView.Adapter<OnlyViewHolder> {
   private final LayoutSelector layoutSelector;
   private List<?> items;
   private OnItemClickListener onItemClickListener;
-  private CustomBinding customBinding;
+  private ExtraBinding extraBinding;
 
   private OnlyAdapter(@NonNull TypeDeterminer typeDeterminer,
                       @NonNull LayoutSelector layoutSelector) {
@@ -29,8 +29,8 @@ public class OnlyAdapter extends RecyclerView.Adapter<OnlyViewHolder> {
     this.onItemClickListener = onItemClickListener;
   }
 
-  private void setCustomBinding(@NonNull CustomBinding customBinding) {
-    this.customBinding = customBinding;
+  private void setExtraBinding(@NonNull ExtraBinding extraBinding) {
+    this.extraBinding = extraBinding;
   }
 
   public void setItems(List<?> items) {
@@ -42,7 +42,7 @@ public class OnlyAdapter extends RecyclerView.Adapter<OnlyViewHolder> {
     final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
     final int layoutId = layoutSelector.layoutForType(viewType);
     final ViewDataBinding binding = DataBindingUtil.inflate(inflater, layoutId, parent, false);
-    return new OnlyViewHolder(binding, customBinding);
+    return new OnlyViewHolder(binding, extraBinding);
   }
 
   @Override
@@ -68,7 +68,7 @@ public class OnlyAdapter extends RecyclerView.Adapter<OnlyViewHolder> {
     private LayoutSelector layoutSelector;
     private TypeDeterminer typeDeterminer;
     private OnItemClickListener onItemClickListener;
-    private CustomBinding customBinding;
+    private ExtraBinding extraBinding;
 
     public Builder typeDeterminer(TypeDeterminer typeDeterminer) {
       this.typeDeterminer = typeDeterminer;
@@ -85,8 +85,8 @@ public class OnlyAdapter extends RecyclerView.Adapter<OnlyViewHolder> {
       return this;
     }
 
-    public Builder customBinding(@NonNull CustomBinding customBinding) {
-      this.customBinding = customBinding;
+    public Builder customBinding(@NonNull ExtraBinding extraBinding) {
+      this.extraBinding = extraBinding;
       return this;
     }
 
@@ -105,8 +105,8 @@ public class OnlyAdapter extends RecyclerView.Adapter<OnlyViewHolder> {
       if (onItemClickListener != null) {
         adapter.setOnItemClickListener(onItemClickListener);
       }
-      if (customBinding != null) {
-        adapter.setCustomBinding(customBinding);
+      if (extraBinding != null) {
+        adapter.setExtraBinding(extraBinding);
       }
       return adapter;
     }
