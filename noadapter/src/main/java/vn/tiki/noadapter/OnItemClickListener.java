@@ -10,8 +10,8 @@ public interface OnItemClickListener {
   /**
    * Callback that will be called when item clicked.
    *
-   * @param view     view in item that is clicked.
-   * @param item        data of item
+   * @param view     view that was clicked.
+   * @param item     data of item
    * @param position position of the item
    */
   void onItemClick(View view, Object item, int position);
