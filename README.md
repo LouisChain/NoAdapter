@@ -5,9 +5,9 @@ Too much boilerplate and effort to implement a list using RecyclerView. But, mos
 ![](logo.png)
 
 ## Sample Usage
-  * `Data Binding`: *We take advantage of `Data Binding` to avoid to implement ViewHolder then `Data Binding` is **required***.
+  * `Data Binding`: *We take advantage of `Data Binding` to avoid to implement ViewHolder then `Data Binding` is required*.
     
-    ```
+    ```gradle
     android {
       dataBinding {
         enabled true
@@ -16,7 +16,7 @@ Too much boilerplate and effort to implement a list using RecyclerView. But, mos
     ```
   * Layout
     
-    ```
+    ```xml
     <?xml version="1.0" encoding="utf-8"?>
     <layout xmlns:android="http://schemas.android.com/apk/res/android">
     
@@ -47,7 +47,7 @@ Too much boilerplate and effort to implement a list using RecyclerView. But, mos
          
   * Build Adapter
     
-    ```
+    ```java
     adapter = new OnlyAdapter.Builder()
             .layoutSelector(new LayoutSelector() {
               @Override public int layoutForType(int type) {
