@@ -1,0 +1,35 @@
+language: android
+
+android:
+  components:
+    - build-tools-23.0.1
+    - android-23
+    - extra-android-m2repository
+
+jdk:
+  - oraclejdk8
+
+before_script:
+
+script:
+  - ./gradlew ":noadapter:build"
+
+after_success:
+  - .buildscript/deploy_snapshot.sh
+
+env:
+  global:
+    - secure: "f3qS4/MfTmcBWmxRJNuhTfeifaZXM2nmwKzNHCYha8lZ/+hFQcUbE1hJATOoRjdaRzIPgtouHSf7HgwKBfVPCNj35zee9cVO1TCfRPfr5rqLgvcmgiYnaeyVX0JVveH4AjwOjGJLXqVyMlDy/Y9ol7fW7OQDkz403As+oYxUvzi3MaRQAby56YWIDkHLEgcK5C20dvxS+e6/2wxVXG2D6woyG8D0xE0H7/n8pWwiF5Spby+9UcjwJ26lD8/XTIvtIcLgFVIYfW79ANLKhm8+i7t5BQ45CeRARCPVoQ1XkJiCST/P9V5OY1Gz+VFFHWKW85QPB9SXbcilSbxLmDRQA7snA5GUbR+E1aGdKEjfYVecz/TJioBlwOVjDLUPLoaT0Mi3RY1K+Yu8RIPl64fxQ2Ik2uQhGY0freCeaO/2v7zs0p2e/IfxpwNb8yWeywhSGcoqY6tBSPTH0LPRmb9ux6p+9xwxGctr9MtK+Z0AXKgLvAts9tzTAsQWlI6hvlhUjES63PjGwbZWAuBjF0pFeDrlYN94l3dCDDp8oK3oIbbEGD+tFyiBNQ96ArlJU56AeyHnZN9PVx9ckmsD1tHfKUFG6UmzWAc+jTx97WI44i8vKhWq3dG1ywNHY2gXxVopO36av3KTupoC9xB5Mm3qk3HVIXETbzLCRNvf+0iPQFE="
+
+branches:
+  except:
+    - gh-pages
+
+notifications:
+  email: false
+
+sudo: false
+
+cache:
+  directories:
+    - $HOME/.gradle
