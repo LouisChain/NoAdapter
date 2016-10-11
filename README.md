@@ -1,5 +1,7 @@
 # NoAdapter
 
+[![Build Status](https://travis-ci.org/tikivn/NoAdapter.svg?branch=master)](https://travis-ci.org/tikivn/NoAdapter)
+
 Too much boilerplate and effort to implement a list using RecyclerView. But, most of them can be omitted. This library will take care of the heavy part and leave you the easy part.
 
 ![](logo.png)
