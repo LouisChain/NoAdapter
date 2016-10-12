@@ -13,7 +13,7 @@ jdk:
   - oraclejdk8
 
 before_script:
-
+  - rm -rf ~/.gradle/caches/
 script:
   - ./gradlew ":noadapter:build"
 
