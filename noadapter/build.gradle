@@ -10,28 +10,44 @@ android {
   dataBinding {
     enabled true
   }
+
   defaultConfig {
     minSdkVersion rootProject.ext.minSdkVersion
 
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
   }
+
+  dexOptions {
+    preDexLibraries = !rootProject.ext.ci
+  }
+
+  lintOptions {
+    textReport true
+    textOutput 'stdout'
+  }
+
+  packagingOptions {
+    exclude 'LICENSE.txt'
+  }
+
   buildTypes {
-    release {
-      minifyEnabled false
-      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    debug {
+      testCoverageEnabled true
     }
   }
+
 }
 
 dependencies {
   compile fileTree(dir: 'libs', include: ['*.jar'])
-  androidTestCompile(rootProject.ext.espressoCore, {
-    exclude group: 'com.android.support', module: 'support-annotations'
-  })
+  compile rootProject.ext.supportAnnotations
   compile rootProject.ext.appCompatV7
   compile rootProject.ext.recyclerViewV7
   testCompile rootProject.ext.junit
+  androidTestCompile(rootProject.ext.espressoCore, {
+    exclude group: 'com.android.support', module: 'support-annotations'
+  })
 }
 
 apply from: rootProject.file('gradle/gradle-mvn-push.gradle')

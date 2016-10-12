@@ -2,14 +2,19 @@ ext {
   minSdkVersion = 15
   compileSdkVersion = 24
   buildToolsVersion = "24.0.2"
+
+  ci = 'true'.equals(System.getenv('CI'))
+
+  noAdapter = project(':noadapter')
   appCompatV7 = 'com.android.support:appcompat-v7:24.2.1'
   recyclerViewV7 = 'com.android.support:recyclerview-v7:24.2.1'
-  junit = 'junit:junit:4.12'
-  espressoCore = 'com.android.support.test.espresso:espresso-core:2.2.2'
+  supportAnnotations = 'com.android.support:support-annotations:24.2.1'
   ixJava = 'com.github.akarnokd:ixjava:1.0.0-RC3'
   adapterCommands = 'com.hannesdorfmann.adaptercommands:adaptercommands:1.0.3'
   rxAndroid = 'io.reactivex:rxandroid:1.2.1'
   rxJava = 'io.reactivex:rxjava:1.2.0'
 
-  noAdapter = project(':noadapter')
+  // Testing
+  junit = 'junit:junit:4.12'
+  espressoCore = 'com.android.support.test.espresso:espresso-core:2.2.2'
 }
