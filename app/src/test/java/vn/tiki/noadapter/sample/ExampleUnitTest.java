@@ -1,4 +1,4 @@
-package vn.tiki.noadapter2.sample;
+package vn.tiki.noadapter.sample;
 
 import org.junit.Test;
 

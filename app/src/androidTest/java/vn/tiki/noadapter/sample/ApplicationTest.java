@@ -1,4 +1,4 @@
-package vn.tiki.noadapter2.sample.sample;
+package vn.tiki.noadapter.sample;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
