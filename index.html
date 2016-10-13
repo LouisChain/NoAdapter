@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Noadapter by tikivn</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Noadapter</h1>
+      <h2 class="project-tagline"></h2>
+      <a href="https://github.com/tikivn/NoAdapter" class="btn">View on GitHub</a>
+      <a href="https://github.com/tikivn/NoAdapter/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/tikivn/NoAdapter/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="noadapter" class="anchor" href="#noadapter" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>NoAdapter</h1>
+
+<p><a href="https://travis-ci.org/tikivn/NoAdapter"><img src="https://travis-ci.org/tikivn/NoAdapter.svg?branch=master" alt="Build Status"></a></p>
+
+<p>Too much boilerplate and effort to implement a list using RecyclerView. But, most of them can be omitted. This library will take care of the heavy part and leave you the easy part.</p>
+
+<p><img src="logo.png" alt=""></p>
+
+<h2>
+<a id="sample-usage" class="anchor" href="#sample-usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Sample Usage</h2>
+
+<ul>
+<li>
+<p><code>Data Binding</code>: <em>We take advantage of <code>Data Binding</code> to avoid to implement ViewHolder then <code>Data Binding</code> is required</em>.</p>
+
+<div class="highlight highlight-source-groovy-gradle"><pre><span class="pl-en">android</span> {
+  dataBinding {
+    enabled <span class="pl-c1">true</span>
+  }
+}</pre></div>
+</li>
+<li>
+<p>Layout</p>
+
+<div class="highlight highlight-text-xml"><pre>&lt;?<span class="pl-ent">xml</span><span class="pl-e"> version</span>=<span class="pl-s"><span class="pl-pds">"</span>1.0<span class="pl-pds">"</span></span><span class="pl-e"> encoding</span>=<span class="pl-s"><span class="pl-pds">"</span>utf-8<span class="pl-pds">"</span></span>?&gt;
+&lt;<span class="pl-ent">layout</span> <span class="pl-e">xmlns</span><span class="pl-e">:</span><span class="pl-e">android</span>=<span class="pl-s"><span class="pl-pds">"</span>http://schemas.android.com/apk/res/android<span class="pl-pds">"</span></span>&gt;
+
+  &lt;<span class="pl-ent">data</span>&gt;
+
+    &lt;<span class="pl-ent">variable</span>
+      <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>onClick<span class="pl-pds">"</span></span>
+      <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">"</span>android.view.View.OnClickListener<span class="pl-pds">"</span></span>/&gt;
+
+    &lt;<span class="pl-ent">variable</span>
+      <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>item<span class="pl-pds">"</span></span>
+      <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">"</span>vn.tiki.noadapter.sample.entity.User<span class="pl-pds">"</span></span>/&gt;
+
+  &lt;/<span class="pl-ent">data</span>&gt;
+
+  &lt;<span class="pl-ent">TextView</span>
+    <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">layout_width</span>=<span class="pl-s"><span class="pl-pds">"</span>match_parent<span class="pl-pds">"</span></span>
+    <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">layout_height</span>=<span class="pl-s"><span class="pl-pds">"</span>wrap_content<span class="pl-pds">"</span></span>
+    <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">text</span>=<span class="pl-s"><span class="pl-pds">"</span>@{item.name}<span class="pl-pds">"</span></span>
+    <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">onClick</span>=<span class="pl-s"><span class="pl-pds">"</span>@{onClick}<span class="pl-pds">"</span></span>
+    /&gt;
+
+&lt;/<span class="pl-ent">layout</span>&gt;</pre></div>
+
+<ul>
+<li>
+<code>item</code>: - data for binding</li>
+<li>
+<code>onClick</code>: - set for views which you want to handle <code>OnClickListener</code><br>
+</li>
+</ul>
+</li>
+<li>
+<p>Build Adapter</p>
+
+<div class="highlight highlight-source-java"><pre>adapter <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">OnlyAdapter</span>.<span class="pl-smi">Builder</span>()
+        .layoutSelector(<span class="pl-k">new</span> <span class="pl-smi">LayoutSelector</span>() {
+          <span class="pl-k">@Override</span> <span class="pl-k">public</span> <span class="pl-k">int</span> <span class="pl-en">layoutForType</span>(<span class="pl-k">int</span> <span class="pl-v">type</span>) {
+            <span class="pl-k">return</span> <span class="pl-smi">R</span><span class="pl-k">.</span>layout<span class="pl-k">.</span>item;
+          }
+        })
+        .onItemClickListener(<span class="pl-k">new</span> <span class="pl-smi">OnItemClickListener</span>() {
+          <span class="pl-k">@Override</span> <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">onItemClick</span>(<span class="pl-smi">View</span> <span class="pl-v">view</span>, <span class="pl-smi">Object</span> <span class="pl-v">item</span>, <span class="pl-k">int</span> <span class="pl-v">position</span>) {
+            <span class="pl-k">switch</span>(view<span class="pl-k">.</span>getId()) {
+              <span class="pl-k">case</span> <span class="pl-smi">R</span><span class="pl-k">.</span>id<span class="pl-k">.</span>text1<span class="pl-k">:</span>
+                <span class="pl-smi">Log</span><span class="pl-k">.</span>d(<span class="pl-c1">TAG</span>, <span class="pl-s"><span class="pl-pds">"</span>text1 is clicked<span class="pl-pds">"</span></span>);
+                <span class="pl-k">break</span>;
+              <span class="pl-k">case</span> <span class="pl-smi">R</span><span class="pl-k">.</span>id<span class="pl-k">.</span>text2<span class="pl-k">:</span>
+                <span class="pl-smi">Log</span><span class="pl-k">.</span>d(<span class="pl-c1">TAG</span>, <span class="pl-s"><span class="pl-pds">"</span>text2 is clicked<span class="pl-pds">"</span></span>);
+                <span class="pl-k">break</span>;
+            }
+          }
+        })
+        .build();
+recyclerView<span class="pl-k">.</span>setAdapter(adapter);</pre></div>
+</li>
+</ul>
+
+<p>See more in the sample</p>
+
+<h2>
+<a id="download" class="anchor" href="#download" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Download</h2>
+
+<p>Download <a href="https://search.maven.org/remote_content?g=vn.tiki.noadapter&amp;a=noadapter&amp;v=LATEST">the latest JAR</a> or grab via Gradle:</p>
+
+<div class="highlight highlight-source-groovy"><pre>compile <span class="pl-s"><span class="pl-pds">'</span>vn.tiki.noadapter:noadapter:1.0.0<span class="pl-pds">'</span></span></pre></div>
+
+<p>or Maven:</p>
+
+<div class="highlight highlight-text-xml"><pre>&lt;<span class="pl-ent">dependency</span>&gt;
+  &lt;<span class="pl-ent">groupId</span>&gt;vn.tiki.noadapter&lt;/<span class="pl-ent">groupId</span>&gt;
+  &lt;<span class="pl-ent">artifactId</span>&gt;noadapter&lt;/<span class="pl-ent">artifactId</span>&gt;
+  &lt;<span class="pl-ent">version</span>&gt;1.0.0&lt;/<span class="pl-ent">version</span>&gt;
+&lt;/<span class="pl-ent">dependency</span>&gt;</pre></div>
+
+<p>Snapshots of the development version are available in <a href="https://oss.sonatype.org/content/repositories/snapshots/">Sonatype's <code>snapshots</code> repository</a>.</p>
+
+<h2>
+<a id="proguard" class="anchor" href="#proguard" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>ProGuard</h2>
+
+<p>If you are using ProGuard you might need to add the following option:</p>
+
+<pre><code>-dontwarn vn.tiki.noadapter.**
+</code></pre>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>License</h2>
+
+<pre><code>Copyright 2016 Tiki Corp
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+</code></pre>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/tikivn/NoAdapter">Noadapter</a> is maintained by <a href="https://github.com/tikivn">tikivn</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
