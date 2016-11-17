@@ -95,10 +95,7 @@ Snapshots of the development version are available in [Sonatype's `snapshots` re
 
 ## ProGuard
 
-If you are using ProGuard you might need to add the following option:
-```
--dontwarn vn.tiki.noadapter.**
-```
+No specific
 
 
 
