@@ -38,8 +38,9 @@ class OnlyViewHolder extends RecyclerView.ViewHolder implements View.OnClickList
 
   @Override
   public void onClick(View view) {
-    if (onItemClickListener != null) {
-      onItemClickListener.onItemClick(view, item, getAdapterPosition());
+      final int position = getAdapterPosition();
+    if (onItemClickListener != null && position != RecyclerView.NO_POSITION) {
+      onItemClickListener.onItemClick(view, item, position);
     }
   }
 }
