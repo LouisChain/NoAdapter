@@ -78,14 +78,14 @@ See more in the sample
 
 Download [the latest JAR][1] or grab via Gradle:
 ```groovy
-compile 'vn.tiki.noadapter:noadapter:1.0.0'
+compile 'vn.tiki.noadapter:noadapter:1.0.1'
 ```
 or Maven:
 ```xml
 <dependency>
   <groupId>vn.tiki.noadapter</groupId>
   <artifactId>noadapter</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
 </dependency>
 ```
 
