@@ -72,13 +72,16 @@ public class MainActivity extends AppCompatActivity {
         .viewHolderSelector(viewHolderSelector)
         .onItemClickListener(new OnItemClickListener() {
           @Override public void onItemClick(View view, Object item, int position) {
-            Toast.makeText(MainActivity.this, "Clicked on item: " + item, Toast.LENGTH_SHORT).show();
+            Toast
+                .makeText(MainActivity.this, "Clicked on item: " + item, Toast.LENGTH_SHORT)
+                .show();
           }
         })
         .diffCallback(new DiffCallback() {
           @Override public boolean areItemsTheSame(Object oldItem, Object newItem) {
             if (oldItem instanceof Color) {
-              return newItem instanceof Color && ((Color) oldItem).getId() == ((Color) newItem).getId();
+              return newItem instanceof Color
+                  && ((Color) oldItem).getId() == ((Color) newItem).getId();
             } else {
               return oldItem.equals(newItem);
             }

@@ -2,10 +2,17 @@
 
 [![Build Status](https://travis-ci.org/tikivn/NoAdapter.svg?branch=master)](https://travis-ci.org/tikivn/NoAdapter)
 
-Too much boilerplate and effort to implement a list using RecyclerView. But, most of them can be omitted. This library will take care of the heavy part and leave you the easy part.
 
+Too much boilerplate and effort to implement a list using RecyclerView. But, most of them can be omitted.
 ![](logo.png)
 
+## Why NoAdapter
+- You'll never need to implement Adapter again.
+- No need to worry about changes anymore
+
+## Single View Type
+1. Implement ViewHolder
+2.
 ## Sample Usage
   * `Data Binding`: *We take advantage of `Data Binding` to avoid to implement ViewHolder then `Data Binding` is required*.
     
