@@ -31,18 +31,37 @@ public class BuilderTest {
   }
 
   @Test
-  public void shouldVerifyDiffUtilCallback() throws Exception {
-    try {
-      builder.viewHolderSelector(new ViewHolderSelector() {
-        @Override public AbsViewHolder viewHolderForType(ViewGroup parent, int type) {
-          return new AbsViewHolder(parent);
-        }
-      });
-      builder.build();
-    } catch (Exception e) {
-      assertTrue(e instanceof NullPointerException);
-      assertEquals("Null diffUtilCallback", e.getMessage());
-    }
+  public void shouldBuildAdapterWithDefaultDiffCallback() throws Exception {
+    final OnlyAdapter adapter = builder.viewHolderSelector(new ViewHolderSelector() {
+      @Override public AbsViewHolder viewHolderForType(ViewGroup parent, int type) {
+        return new AbsViewHolder(parent);
+      }
+    }).build();
+    assertEquals(new DiffUtilCallback(new DefaultDiffCallback()), adapter.diffUtilCallback);
+  }
+
+  @Test
+  public void shouldBuildAdapterWithDefaultTypeDeterminer() throws Exception {
+    final ViewHolderSelector viewHolderSelector = new ViewHolderSelector() {
+      @Override public AbsViewHolder viewHolderForType(ViewGroup parent, int type) {
+        return new AbsViewHolder(parent);
+      }
+    };
+    final DiffCallback diffCallback = new DiffCallback() {
+      @Override public boolean areItemsTheSame(Object oldItem, Object newItem) {
+        return false;
+      }
+
+      @Override public boolean areContentsTheSame(Object oldItem, Object newItem) {
+        return false;
+      }
+    };
+    final OnlyAdapter adapter = builder
+        .viewHolderSelector(viewHolderSelector)
+        .diffCallback(diffCallback)
+        .build();
+
+    assertEquals(new DefaultTypeDeterminer(), adapter.typeDeterminer);
   }
 
   @Test
@@ -84,27 +103,4 @@ public class BuilderTest {
     assertEquals(onItemClickListener, adapter.onItemClickListener);
   }
 
-  @Test
-  public void shouldBuildAdapterWithDefaultTypeDeterminer() throws Exception {
-    final ViewHolderSelector viewHolderSelector = new ViewHolderSelector() {
-      @Override public AbsViewHolder viewHolderForType(ViewGroup parent, int type) {
-        return new AbsViewHolder(parent);
-      }
-    };
-    final DiffCallback diffCallback = new DiffCallback() {
-      @Override public boolean areItemsTheSame(Object oldItem, Object newItem) {
-        return false;
-      }
-
-      @Override public boolean areContentsTheSame(Object oldItem, Object newItem) {
-        return false;
-      }
-    };
-    final OnlyAdapter adapter = builder
-        .viewHolderSelector(viewHolderSelector)
-        .diffCallback(diffCallback)
-        .build();
-
-    assertEquals(new DefaultTypeDeterminer(), adapter.typeDeterminer);
-  }
 }

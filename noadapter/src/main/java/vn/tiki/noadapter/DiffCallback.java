@@ -32,8 +32,9 @@ public interface DiffCallback {
    *
    * @param oldItem The item in the old list
    * @param newItem The item in the new list which replaces the
-   *                        oldItem
-   * @return {@code True} if the contents of the items are the same or {@code false} if they are different.
+   *                oldItem
+   * @return {@code True} if the contents of the items are the same or {@code false}
+   * if they are different.
    */
   boolean areContentsTheSame(Object oldItem, Object newItem);
 }
