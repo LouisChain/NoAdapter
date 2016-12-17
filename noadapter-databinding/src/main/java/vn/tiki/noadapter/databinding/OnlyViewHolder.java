@@ -22,7 +22,7 @@ class OnlyViewHolder extends AbsViewHolder {
   @Override
   public void bind(Object item) {
     super.bind(item);
-    binding.setVariable(vn.tiki.noadapter.BR.item, item);
+    binding.setVariable(vn.tiki.noadapterdatabinding.BR.item, item);
     if (extraBinding != null) {
       extraBinding.onBind(binding, item, getAdapterPosition());
     }
@@ -34,6 +34,6 @@ class OnlyViewHolder extends AbsViewHolder {
     if (onItemClickListener == null) {
       return;
     }
-    binding.setVariable(vn.tiki.noadapter.BR.onClick, this);
+    binding.setVariable(vn.tiki.noadapterdatabinding.BR.onClick, this);
   }
 }

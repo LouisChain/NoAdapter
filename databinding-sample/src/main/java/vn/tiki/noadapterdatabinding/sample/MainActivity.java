@@ -1,4 +1,4 @@
-package vn.tiki.noadapter.sample;
+package vn.tiki.noadapterdatabinding.sample;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -14,18 +13,15 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import vn.tiki.noadapter.AbsViewHolder;
 import vn.tiki.noadapter.DiffCallback;
 import vn.tiki.noadapter.OnItemClickListener;
 import vn.tiki.noadapter.OnlyAdapter;
 import vn.tiki.noadapter.TypeDeterminer;
-import vn.tiki.noadapter.ViewHolderSelector;
-import vn.tiki.noadapter.sample.entity.Color;
-import vn.tiki.noadapter.sample.viewholder.ColorViewHolder;
-import vn.tiki.noadapter.sample.viewholder.TextViewHolder;
+import vn.tiki.noadapter.databinding.BindingViewHolderSelector;
+import vn.tiki.noadapter.databinding.LayoutSelector;
+import vn.tiki.noadapterdatabinding.sample.entity.Color;
 
 public class MainActivity extends AppCompatActivity {
-  private static final String TAG = "MainActivity";
   private static final Random RANDOM = new Random();
   private OnlyAdapter adapter;
   private List<Object> items;
@@ -54,22 +50,26 @@ public class MainActivity extends AppCompatActivity {
     rvList.setLayoutManager(new GridLayoutManager(this, 5, GridLayoutManager.VERTICAL, false));
     rvList.setHasFixedSize(true);
 
+    final BindingViewHolderSelector viewHolderSelector = new BindingViewHolderSelector.Builder()
+        .layoutSelector(new LayoutSelector() {
+          @Override public int layoutForType(int type) {
+            switch (type) {
+              case 1:
+                return R.layout.item_color;
+              default:
+                return R.layout.item_text;
+            }
+          }
+        })
+        .build();
+
     adapter = new OnlyAdapter.Builder()
         .typeDeterminer(new TypeDeterminer() {
           @Override public int typeOf(Object item) {
             return item instanceof Color ? 1 : 0;
           }
         })
-        .viewHolderSelector(new ViewHolderSelector() {
-          @Override public AbsViewHolder viewHolderForType(ViewGroup parent, int type) {
-            switch (type) {
-              case 1:
-                return ColorViewHolder.create(parent);
-              default:
-                return TextViewHolder.create(parent);
-            }
-          }
-        })
+        .viewHolderSelector(viewHolderSelector)
         .onItemClickListener(new OnItemClickListener() {
           @Override public void onItemClick(View view, Object item, int position) {
             Toast.makeText(MainActivity.this, "Clicked on item: " + item, Toast.LENGTH_SHORT).show();
