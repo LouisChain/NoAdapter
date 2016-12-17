@@ -1,7 +1,8 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 
-group = 'vn.tiki.noadapter'
+group = GROUP
+version = VERSION_NAME
 
 android {
   compileSdkVersion rootProject.ext.compileSdkVersion
@@ -12,7 +13,6 @@ android {
     targetSdkVersion rootProject.ext.compileSdkVersion
 
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
   }
 
   dexOptions {

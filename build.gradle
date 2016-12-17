@@ -11,6 +11,10 @@ buildscript {
 }
 
 subprojects {
+
+  group = GROUP
+  version = VERSION_NAME
+
   buildscript {
     repositories {
       jcenter()
@@ -35,9 +39,6 @@ subprojects {
 
     classpath = files()
   }
-
-  group = GROUP
-  version = VERSION_NAME
 
   afterEvaluate {
     tasks.findByName('check').dependsOn('checkstyle')
