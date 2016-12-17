@@ -61,6 +61,11 @@ public class OnlyAdapter extends RecyclerView.Adapter<AbsViewHolder> {
     holder.setOnItemClickListener(onItemClickListener);
   }
 
+  @Override public void onViewRecycled(AbsViewHolder holder) {
+    super.onViewRecycled(holder);
+    holder.unbind();
+  }
+
   @Override
   public int getItemCount() {
     return items == null ? 0 : items.size();

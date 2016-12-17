@@ -15,8 +15,20 @@ public class AbsViewHolder extends RecyclerView.ViewHolder implements View.OnCli
     super(view);
   }
 
+  /**
+   * Called to update view
+   * @param item data
+   */
   public void bind(Object item) {
     this.item = item;
+  }
+
+  /**
+   * Called when a view created by adapter has been recycled. This may be
+   * a good place to release expensive data or resources.
+   */
+  public void unbind() {
+    // NoOp
   }
 
   protected void setOnItemClickListener(OnItemClickListener onItemClickListener) {
@@ -30,4 +42,5 @@ public class AbsViewHolder extends RecyclerView.ViewHolder implements View.OnCli
       onItemClickListener.onItemClick(view, item, position);
     }
   }
+
 }
