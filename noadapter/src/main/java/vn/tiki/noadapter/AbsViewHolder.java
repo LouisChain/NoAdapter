@@ -19,7 +19,7 @@ public class AbsViewHolder extends RecyclerView.ViewHolder implements View.OnCli
     this.item = item;
   }
 
-  void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+  protected void setOnItemClickListener(OnItemClickListener onItemClickListener) {
     this.onItemClickListener = onItemClickListener;
   }
 

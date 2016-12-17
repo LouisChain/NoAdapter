@@ -6,6 +6,7 @@ ext {
   ci = 'true'.equals(System.getenv('CI'))
 
   noAdapter = project(':noadapter')
+  noAdapterDataBinding = project(':noadapter-databinding')
   appCompatV7 = 'com.android.support:appcompat-v7:25.0.1'
   appCompatV7 = 'com.android.support:cardview-v7:25.0.1'
   recyclerViewV7 = 'com.android.support:recyclerview-v7:25.0.1'

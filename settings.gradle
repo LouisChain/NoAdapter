@@ -1,4 +1,4 @@
 include ':app'
 //include ':sample-databinding'
 include ':noadapter'
-//include ':noadapter-databinding'
+include ':noadapter-databinding'
