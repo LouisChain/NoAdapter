@@ -16,5 +16,6 @@ ext {
 
   // Testing
   junit = 'junit:junit:4.12'
+  mockito = 'org.mockito:mockito-core:2.3.5'
   espressoCore = 'com.android.support.test.espresso:espresso-core:2.2.2'
 }

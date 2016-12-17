@@ -17,15 +17,15 @@ public class OnlyAdapter extends RecyclerView.Adapter<AbsViewHolder> {
   private final ViewHolderSelector viewHolderSelector;
   private List<?> items = Collections.emptyList();
   private OnItemClickListener onItemClickListener;
-  private DiffCallback diffCallback;
+  private DiffUtilCallback diffUtilCallback;
 
   private OnlyAdapter(@NonNull TypeDeterminer typeDeterminer,
                       @NonNull ViewHolderSelector viewHolderSelector,
                       DiffCallback diffCallback) {
     this.typeDeterminer = typeDeterminer;
     this.viewHolderSelector = viewHolderSelector;
-    this.diffCallback = diffCallback;
-    this.diffCallback.setItems(items);
+    this.diffUtilCallback = new DiffUtilCallback(diffCallback);
+    this.diffUtilCallback.setItems(items);
   }
 
   private void setOnItemClickListener(@NonNull OnItemClickListener onItemClickListener) {
@@ -33,10 +33,10 @@ public class OnlyAdapter extends RecyclerView.Adapter<AbsViewHolder> {
   }
 
   public void setItems(final List<?> newItems) {
-    diffCallback.setItems(items);
-    diffCallback.setNewItems(newItems);
+    diffUtilCallback.setItems(items);
+    diffUtilCallback.setNewItems(newItems);
 
-    final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
+    final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffUtilCallback);
 
     items.clear();
     items = new ArrayList<>(newItems);
@@ -106,7 +106,7 @@ public class OnlyAdapter extends RecyclerView.Adapter<AbsViewHolder> {
         throw new NullPointerException("Null viewHolderSelector");
       }
       if (diffCallback == null) {
-        throw new NullPointerException("Null diffCallback");
+        throw new NullPointerException("Null diffUtilCallback");
       }
       final OnlyAdapter adapter = new OnlyAdapter(typeDeterminer, viewHolderSelector, diffCallback);
       if (onItemClickListener != null) {
