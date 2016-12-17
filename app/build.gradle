@@ -11,9 +11,11 @@ android {
     versionName "1.0"
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
   }
-  dataBinding {
-    enabled true
+
+  dexOptions {
+    preDexLibraries = !rootProject.ext.ci
   }
+
   buildTypes {
     release {
       minifyEnabled false
@@ -27,10 +29,10 @@ dependencies {
   androidTestCompile(rootProject.ext.espressoCore, {
     exclude group: 'com.android.support', module: 'support-annotations'
   })
+  compile 'com.android.support:appcompat-v7:25.0.1'
   compile rootProject.ext.appCompatV7
   compile rootProject.ext.noAdapter
   compile rootProject.ext.ixJava
-  compile rootProject.ext.adapterCommands
   compile rootProject.ext.rxAndroid
   compile rootProject.ext.rxJava
   testCompile rootProject.ext.junit

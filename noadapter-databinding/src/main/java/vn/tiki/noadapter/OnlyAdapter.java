@@ -1,52 +1,52 @@
 package vn.tiki.noadapter;
 
+import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.support.annotation.NonNull;
-import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
  * Created by Giang Nguyen on 8/14/16.
  */
-public class OnlyAdapter extends RecyclerView.Adapter<AbsViewHolder> {
+public class OnlyAdapter extends RecyclerView.Adapter<OnlyViewHolder> {
   private final TypeDeterminer typeDeterminer;
-  private final ViewHolderSelector viewHolderSelector;
-  private List<?> items = Collections.emptyList();
+  private final LayoutSelector layoutSelector;
+  private List<?> items;
   private OnItemClickListener onItemClickListener;
-  private DiffCallback diffCallback;
+  private ExtraBinding extraBinding;
 
   private OnlyAdapter(@NonNull TypeDeterminer typeDeterminer,
-                      @NonNull ViewHolderSelector viewHolderSelector,
-                      DiffCallback diffCallback) {
+                      @NonNull LayoutSelector layoutSelector) {
     this.typeDeterminer = typeDeterminer;
-    this.viewHolderSelector = viewHolderSelector;
-    this.diffCallback = diffCallback;
-    this.diffCallback.setItems(items);
+    this.layoutSelector = layoutSelector;
   }
 
   private void setOnItemClickListener(@NonNull OnItemClickListener onItemClickListener) {
     this.onItemClickListener = onItemClickListener;
   }
 
-  public void setItems(final List<?> newItems) {
-    diffCallback.setItems(items);
-    diffCallback.setNewItems(newItems);
+  private void setExtraBinding(@NonNull ExtraBinding extraBinding) {
+    this.extraBinding = extraBinding;
+  }
 
-    final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
+  public void setItems(List<?> items) {
+    this.items = items;
+  }
 
-    items.clear();
-    items = new ArrayList<>(newItems);
-
-    diffResult.dispatchUpdatesTo(this);
+  public List<?> getItems() {
+    return items;
   }
 
   @Override
-  public AbsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    return viewHolderSelector.viewHolderForType(parent, viewType);
+  public OnlyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+    final int layoutId = layoutSelector.layoutForType(viewType);
+    final ViewDataBinding binding = DataBindingUtil.inflate(inflater, layoutId, parent, false);
+    return new OnlyViewHolder(binding, extraBinding);
   }
 
   @Override
@@ -56,7 +56,7 @@ public class OnlyAdapter extends RecyclerView.Adapter<AbsViewHolder> {
   }
 
   @Override
-  public void onBindViewHolder(AbsViewHolder holder, int position) {
+  public void onBindViewHolder(OnlyViewHolder holder, int position) {
     final Object item = items.get(position);
     holder.bind(item);
     holder.setOnItemClickListener(onItemClickListener);
@@ -69,18 +69,18 @@ public class OnlyAdapter extends RecyclerView.Adapter<AbsViewHolder> {
 
   public static class Builder {
 
-    private ViewHolderSelector viewHolderSelector;
+    private LayoutSelector layoutSelector;
     private TypeDeterminer typeDeterminer;
     private OnItemClickListener onItemClickListener;
-    private DiffCallback diffCallback;
+    private ExtraBinding extraBinding;
 
     public Builder typeDeterminer(TypeDeterminer typeDeterminer) {
       this.typeDeterminer = typeDeterminer;
       return this;
     }
 
-    public Builder viewHolderSelector(ViewHolderSelector viewHolderSelector) {
-      this.viewHolderSelector = viewHolderSelector;
+    public Builder layoutSelector(LayoutSelector layoutSelector) {
+      this.layoutSelector = layoutSelector;
       return this;
     }
 
@@ -89,8 +89,8 @@ public class OnlyAdapter extends RecyclerView.Adapter<AbsViewHolder> {
       return this;
     }
 
-    public Builder diffCallback(DiffCallback diffCallback) {
-      this.diffCallback = diffCallback;
+    public Builder customBinding(@NonNull ExtraBinding extraBinding) {
+      this.extraBinding = extraBinding;
       return this;
     }
 
@@ -102,15 +102,15 @@ public class OnlyAdapter extends RecyclerView.Adapter<AbsViewHolder> {
           }
         };
       }
-      if (viewHolderSelector == null) {
-        throw new NullPointerException("Null viewHolderSelector");
+      if (layoutSelector == null) {
+        throw new NullPointerException("Null layoutSelector");
       }
-      if (diffCallback == null) {
-        throw new NullPointerException("Null diffCallback");
-      }
-      final OnlyAdapter adapter = new OnlyAdapter(typeDeterminer, viewHolderSelector, diffCallback);
+      final OnlyAdapter adapter = new OnlyAdapter(typeDeterminer, layoutSelector);
       if (onItemClickListener != null) {
         adapter.setOnItemClickListener(onItemClickListener);
+      }
+      if (extraBinding != null) {
+        adapter.setExtraBinding(extraBinding);
       }
       return adapter;
     }
