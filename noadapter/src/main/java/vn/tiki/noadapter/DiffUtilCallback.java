@@ -47,4 +47,17 @@ class DiffUtilCallback extends DiffUtil.Callback {
     return diffCallback.areContentsTheSame(oldItem, newItem);
   }
 
+  @Override public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    DiffUtilCallback that = (DiffUtilCallback) o;
+
+    return diffCallback.equals(that.diffCallback);
+
+  }
+
+  @Override public int hashCode() {
+    return diffCallback.hashCode();
+  }
 }

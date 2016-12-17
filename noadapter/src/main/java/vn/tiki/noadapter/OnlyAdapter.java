@@ -13,11 +13,13 @@ import java.util.List;
  * Created by Giang Nguyen on 8/14/16.
  */
 public class OnlyAdapter extends RecyclerView.Adapter<AbsViewHolder> {
-  private final TypeDeterminer typeDeterminer;
-  private final ViewHolderSelector viewHolderSelector;
   private List<?> items = Collections.emptyList();
-  private OnItemClickListener onItemClickListener;
-  private DiffUtilCallback diffUtilCallback;
+
+  final TypeDeterminer typeDeterminer;
+  final ViewHolderSelector viewHolderSelector;
+  final DiffUtilCallback diffUtilCallback;
+
+  OnItemClickListener onItemClickListener;
 
   private OnlyAdapter(@NonNull TypeDeterminer typeDeterminer,
                       @NonNull ViewHolderSelector viewHolderSelector,
@@ -25,7 +27,6 @@ public class OnlyAdapter extends RecyclerView.Adapter<AbsViewHolder> {
     this.typeDeterminer = typeDeterminer;
     this.viewHolderSelector = viewHolderSelector;
     this.diffUtilCallback = new DiffUtilCallback(diffCallback);
-    this.diffUtilCallback.setItems(items);
   }
 
   private void setOnItemClickListener(@NonNull OnItemClickListener onItemClickListener) {
@@ -96,11 +97,7 @@ public class OnlyAdapter extends RecyclerView.Adapter<AbsViewHolder> {
 
     public OnlyAdapter build() {
       if (typeDeterminer == null) {
-        typeDeterminer = new TypeDeterminer() {
-          @Override public int typeOf(Object item) {
-            return 0;
-          }
-        };
+        typeDeterminer = new DefaultTypeDeterminer();
       }
       if (viewHolderSelector == null) {
         throw new NullPointerException("Null viewHolderSelector");
