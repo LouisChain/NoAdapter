@@ -5,7 +5,7 @@
 
 Too much boilerplate and effort to implement a list using RecyclerView. But, most of them can be omitted.
 
-![](logo.png)
+![](./favicon.png)
 
 ## Table of contents
 - [Why NoAdapter](#why-noadapter)
