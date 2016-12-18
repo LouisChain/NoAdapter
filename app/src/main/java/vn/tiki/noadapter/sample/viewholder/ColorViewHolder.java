@@ -3,7 +3,6 @@ package vn.tiki.noadapter.sample.viewholder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import vn.tiki.noadapter.AbsViewHolder;
 import vn.tiki.noadapter.sample.R;
 import vn.tiki.noadapter.sample.entity.Color;
@@ -13,8 +12,10 @@ import vn.tiki.noadapter.sample.entity.Color;
  */
 
 public class ColorViewHolder extends AbsViewHolder {
+
   private ColorViewHolder(View view) {
     super(view);
+    // Set "this" to clickListener then it'll be delegated to Adapter
     view.setOnClickListener(this);
   }
 
@@ -26,6 +27,7 @@ public class ColorViewHolder extends AbsViewHolder {
 
   @Override public void bind(Object item) {
     super.bind(item);
+    // Set up display for data
     itemView.setBackgroundColor(((Color) item).getValue());
   }
 }

@@ -4,7 +4,15 @@
 
 
 Too much boilerplate and effort to implement a list using RecyclerView. But, most of them can be omitted.
+
 ![](logo.png)
+
+## Table of contents
+- [Why NoAdapter](#Why NoAdapter)
+- [Single View Type](#Single View Type)
+- [Multiple View Type](#Multiple View Type)
+- [Use with Data Binding](#Use with Data Binding)
+- [Download](#Download)
 
 ## Why NoAdapter
 - You'll never need to implement Adapter again.
@@ -12,88 +20,317 @@ Too much boilerplate and effort to implement a list using RecyclerView. But, mos
 
 ## Single View Type
 1. Implement ViewHolder
-2.
-## Sample Usage
-  * `Data Binding`: *We take advantage of `Data Binding` to avoid to implement ViewHolder then `Data Binding` is required*.
-    
-    ```gradle
-    android {
-      dataBinding {
-        enabled true
+
+    - `item_text.xml`
+      ~~~xml
+      <?xml version="1.0" encoding="utf-8"?>
+      <android.support.v7.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_margin="8dp"
+        app:cardElevation="4dp">
+
+        <TextView
+          android:id="@+id/text"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:textAppearance="@style/Base.TextAppearance.AppCompat.Body2"
+        />
+      </android.support.v7.widget.CardView>
+      ~~~
+
+    - `TextViewHolder.java`
+      ~~~java
+      public class TextViewHolder extends AbsViewHolder {
+        private final TextView text;
+
+        private TextViewHolder(View view) {
+          super(view);
+          text = ((TextView) view.findViewById(R.id.text));
+          // Set "this" to clickListener then it'll be delegated to Adapter
+          view.setOnClickListener(this);
+        }
+
+        public static TextViewHolder create(ViewGroup parent) {
+          final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+          final View view = inflater.inflate(R.layout.item_text, parent, false);
+          return new TextViewHolder(view);
+        }
+
+        @Override public void bind(Object item) {
+          super.bind(item);
+          text.setText((String) item);
+        }
       }
-    }
-    ```
-  * Layout
-    
-    ```xml
+      ~~~
+
+2. Setup RecyclerView
+
+    ~~~java
+    adapter = new OnlyAdapter.Builder()
+        .viewHolderSelector(new ViewHolderSelector() {
+          @Override public AbsViewHolder viewHolderForType(ViewGroup parent, int type) {
+            return TextViewHolder.create(parent);
+          }
+        })
+        .onItemClickListener(new OnItemClickListener() {
+          @Override public void onItemClick(View view, Object item, int position) {
+            Toast
+                .makeText(MainActivity.this, "Clicked on item: " + item, Toast.LENGTH_SHORT)
+                .show();
+          }
+        })
+        .build();
+    rvList.setAdapter(adapter);
+    ~~~
+
+3. Set data
+
+    ~~~java
+    final List<String> items = Arrays.asList(
+        "Text #1",
+        "Text #2",
+        "Text #3",
+        "Text #4",
+        "Text #5"
+    );
+    adapter.setItems(items);
+    ~~~
+
+
+## Multiple View Type
+1. Implement ViewHolder
+
+   1.1 Color item
+    - `item_color.xml`
+      ~~~xml
+      <?xml version="1.0" encoding="utf-8"?>
+      <android.support.v7.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent" android:layout_height="60dp"
+        android:layout_margin="8dp"
+        app:cardElevation="4dp"/>
+      ~~~
+    - `ColorViewHolder.java`
+      ~~~java
+      public class ColorViewHolder extends AbsViewHolder {
+
+        private ColorViewHolder(View view) {
+          super(view);
+          // Set "this" to clickListener then it'll delegate to Adapter
+          view.setOnClickListener(this);
+        }
+
+        public static ColorViewHolder create(ViewGroup parent) {
+          final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+          final View view = inflater.inflate(R.layout.item_color, parent, false);
+          return new ColorViewHolder(view);
+        }
+
+        @Override public void bind(Object item) {
+          super.bind(item);
+          // Set up display for data
+          itemView.setBackgroundColor(((Color) item).getValue());
+        }
+      }
+
+      ~~~
+
+   1.2. Text item
+    - `item_text.xml`
+      ~~~xml
+      <?xml version="1.0" encoding="utf-8"?>
+      <android.support.v7.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_margin="8dp"
+        app:cardElevation="4dp">
+
+        <TextView
+          android:id="@+id/text"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:textAppearance="@style/Base.TextAppearance.AppCompat.Body2"
+        />
+      </android.support.v7.widget.CardView>
+      ~~~
+
+    - `TextViewHolder.java`
+      ~~~java
+      public class TextViewHolder extends AbsViewHolder {
+        private final TextView text;
+
+        private TextViewHolder(View view) {
+          super(view);
+          text = ((TextView) view.findViewById(R.id.text));
+          // Set "this" to clickListener then it'll be delegated to Adapter
+          view.setOnClickListener(this);
+        }
+
+        public static TextViewHolder create(ViewGroup parent) {
+          final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+          final View view = inflater.inflate(R.layout.item_text, parent, false);
+          return new TextViewHolder(view);
+        }
+
+        @Override public void bind(Object item) {
+          super.bind(item);
+          text.setText((String) item);
+        }
+      }
+      ~~~
+
+2. Setup RecyclerView
+
+    ~~~java
+    adapter = new OnlyAdapter.Builder()
+        .typeDeterminer(new TypeDeterminer() {
+          @Override public int typeOf(Object item) {
+            return item instanceof Color ? 1 : 0;
+          }
+        })
+        .viewHolderSelector(new ViewHolderSelector() {
+          @Override public AbsViewHolder viewHolderForType(ViewGroup parent, int type) {
+            switch (type) {
+              case 1:
+                return ColorViewHolder.create(parent);
+              default:
+                return TextViewHolder.create(parent);
+            }
+          }
+        })
+        .onItemClickListener(new OnItemClickListener() {
+          @Override public void onItemClick(View view, Object item, int position) {
+            Toast
+                .makeText(MainActivity.this, "Clicked on item: " + item, Toast.LENGTH_SHORT)
+                .show();
+          }
+        })
+        .diffCallback(new DiffCallback() {
+          @Override public boolean areItemsTheSame(Object oldItem, Object newItem) {
+            if (oldItem instanceof Color) {
+              return newItem instanceof Color
+                  && ((Color) oldItem).getId() == ((Color) newItem).getId();
+            } else {
+              return oldItem.equals(newItem);
+            }
+          }
+
+          @Override public boolean areContentsTheSame(Object oldItem, Object newItem) {
+            return oldItem.equals(newItem);
+          }
+        })
+        .build();
+    rvList.setAdapter(adapter);
+    ~~~
+
+3. Set data
+
+    ~~~java
+    final List<Object> items = Arrays.asList(
+        new Color(1, randomColor()),
+        new Color(2, randomColor()),
+        "Text #3",
+        new Color(4, randomColor()),
+        "Text #5"
+    );
+    adapter.setItems(items);
+    ~~~
+
+## Use with Data Binding
+1. Implement Layout + Binding
+
+  - `item_text.xml`
+    ~~~xml
     <?xml version="1.0" encoding="utf-8"?>
-    <layout xmlns:android="http://schemas.android.com/apk/res/android">
-    
+    <layout>
       <data>
-    
+        <variable
+          name="item"
+          type="java.lang.String"/>
         <variable
           name="onClick"
           type="android.view.View.OnClickListener"/>
-    
-        <variable
-          name="item"
-          type="vn.tiki.noadapter.sample.entity.User"/>
-    
       </data>
-    
-      <TextView
+      <android.support.v7.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@{item.name}"
+        android:layout_height="60dp"
+        android:layout_margin="8dp"
         android:onClick="@{onClick}"
+        app:cardElevation="4dp">
+
+        <TextView
+          android:id="@+id/text"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:text="@{item}"
+          android:textAppearance="@style/Base.TextAppearance.AppCompat.Body2"
         />
-    
+      </android.support.v7.widget.CardView>
     </layout>
-    ```
-    
-    * `item`: - data for binding
-    * `onClick`: - set for views which you want to handle `OnClickListener`       
-         
-  * Build Adapter
-    
-    ```java
+    ~~
+
+  **NOTE**:
+
+   - `item`, `onClick` are predefined
+   - `item` presented for data
+   - `onClick` presented for `onClickListener`
+
+2. Setup RecyclerView
+    ~~~java
+    final BindingViewHolderSelector viewHolderSelector = new BindingViewHolderSelector.Builder()
+        .layoutSelector(new LayoutSelector() {
+          @Override public int layoutForType(int type) {
+            return R.layout.item_text;
+          }
+        })
+        .build();
     adapter = new OnlyAdapter.Builder()
-            .layoutSelector(new LayoutSelector() {
-              @Override public int layoutForType(int type) {
-                return R.layout.item;
-              }
-            })
-            .onItemClickListener(new OnItemClickListener() {
-              @Override public void onItemClick(View view, Object item, int position) {
-                switch(view.getId()) {
-                  case R.id.text1:
-                    Log.d(TAG, "text1 is clicked");
-                    break;
-                  case R.id.text2:
-                    Log.d(TAG, "text2 is clicked");
-                    break;
-                }
-              }
-            })
-            .build();
-    recyclerView.setAdapter(adapter);
-    ```
-   
-See more in the sample
+        .viewHolderSelector(viewHolderSelector)
+        .onItemClickListener(new OnItemClickListener() {
+          @Override public void onItemClick(View view, Object item, int position) {
+            Toast
+                .makeText(MainActivity.this, "Clicked on item: " + item, Toast.LENGTH_SHORT)
+                .show();
+          }
+        })
+        .build();
+    rvList.setAdapter(adapter);
+    ~~~
+
+
+3. Set data
+
+    ~~~java
+    final List<String> items = Arrays.asList(
+        "Text #1",
+        "Text #2",
+        "Text #3",
+        "Text #4",
+        "Text #5"
+    );
+    adapter.setItems(items);
+    ~~~
+
+**See more in the sample**
 
 ## Download
 
 Download [the latest JAR][1] or grab via Gradle:
 ```groovy
-compile 'vn.tiki.noadapter:noadapter:1.0.1'
-```
-or Maven:
-```xml
-<dependency>
-  <groupId>vn.tiki.noadapter</groupId>
-  <artifactId>noadapter</artifactId>
-  <version>1.0.1</version>
-</dependency>
+compile 'vn.tiki.noadapter:noadapter:2.0.0-SNAPSHOT'
+// Use with data binding
+compile 'vn.tiki.noadapter:noadapter-databinding:2.0.0-SNAPSHOT'
 ```
 
 Snapshots of the development version are available in [Sonatype's `snapshots` repository][snap].

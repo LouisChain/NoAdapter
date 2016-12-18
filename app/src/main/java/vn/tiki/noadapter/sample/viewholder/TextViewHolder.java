@@ -11,13 +11,13 @@ import vn.tiki.noadapter.sample.R;
 /**
  * Created by Giang Nguyen on 12/15/16.
  */
-
 public class TextViewHolder extends AbsViewHolder {
   private final TextView text;
 
   private TextViewHolder(View view) {
     super(view);
     text = ((TextView) view.findViewById(R.id.text));
+    // Set "this" to clickListener then it'll be delegated to Adapter
     view.setOnClickListener(this);
   }
 
