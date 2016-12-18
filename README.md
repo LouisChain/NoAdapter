@@ -15,8 +15,8 @@ Too much boilerplate and effort to implement a list using RecyclerView. But, mos
 - [Download](#download)
 
 ## Why NoAdapter
-- You'll never need to implement Adapter again.
-- No need to worry about changes anymore
+- You'll never have to implement Adapter for RecyclerView anymore.
+- Never worry about `notifyChanged` anymore. We used DiffUtil to calculate and notify changes for you.
 
 ## Single View Type
 
@@ -292,8 +292,8 @@ adapter.setItems(items);
 
 **NOTE**:
 - `item`, `onClick` are predefined
-- `item` presented for data
-- `onClick` presented for `onClickListener`
+- `item` represented for data
+- `onClick` represented for `onClickListener`
 
 #### 2. Setup Adapter
 
