@@ -1,7 +1,7 @@
 # NoAdapter
 
 [![Build Status](https://travis-ci.org/tikivn/NoAdapter.svg?branch=master)](https://travis-ci.org/tikivn/NoAdapter)
-
+[![codecov](https://codecov.io/gh/tikivn/NoAdapter/branch/master/graph/badge.svg)](https://codecov.io/gh/tikivn/NoAdapter)
 
 Too much boilerplate and effort to implement a list using RecyclerView. But, most of them can be omitted.
 
