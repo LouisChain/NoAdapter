@@ -12,8 +12,9 @@ jdk:
 before_script:
 - rm -rf ~/.gradle/caches/
 script:
-- ./gradlew ":noadapter:build"
+- ./gradlew :noadapter:jacocoTestReport :noadapter-databinding:jacocoTestReport
 after_success:
+- bash <(curl -s https://codecov.io/bash)
 - ".buildscript/deploy_snapshot.sh"
 env:
   global:
