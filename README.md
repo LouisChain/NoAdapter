@@ -18,7 +18,7 @@ Too much boilerplate and effort to implement a list using RecyclerView. But, mos
 
 
 <p align="center">
-<img alt="Sample app demo gif" src="https://github.com/airbnb/epoxy/raw/master/epoxy-sample/epoxy_sample_app.gif" width="200" height="354" />
+<img alt="Sample app demo gif" src="https://github.com/tikivn/NoAdapter/blob/master/demo.gif" width="200" height="354" />
 </p>
 
 
