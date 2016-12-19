@@ -8,11 +8,19 @@ Too much boilerplate and effort to implement a list using RecyclerView. But, mos
 ![](./favicon.png)
 
 ## Table of contents
-- [Why NoAdapter](#why-noadapter)
+- [Demo](#demo)
 - [Single View Type](#single-view-type)
 - [Multiple View Type](#multiple-view-type)
 - [Use with Data Binding](#use-with-data-binding)
 - [Download](#download)
+
+## Demo
+
+
+<p align="center">
+<img alt="Sample app demo gif" src="https://github.com/airbnb/epoxy/raw/master/epoxy-sample/epoxy_sample_app.gif" width="200" height="354" />
+</p>
+
 
 ## Why NoAdapter
 - You'll never have to implement Adapter for RecyclerView anymore.
