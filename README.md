@@ -346,9 +346,9 @@ adapter.setItems(items);
 Download [the latest JAR][1] or grab via Gradle:
 
 ```groovy
-compile 'vn.tiki.noadapter:noadapter:2.0.0-SNAPSHOT'
+compile 'vn.tiki.noadapter:noadapter:2.0.0'
 // Use with data binding
-compile 'vn.tiki.noadapter:noadapter-databinding:2.0.0-SNAPSHOT'
+compile 'vn.tiki.noadapter:noadapter-databinding:2.0.0'
 ```
 
 Snapshots of the development version are available in [Sonatype's `snapshots` repository][snap].
