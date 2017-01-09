@@ -4,7 +4,7 @@ android {
   compileSdkVersion rootProject.ext.compileSdkVersion
   buildToolsVersion rootProject.ext.buildToolsVersion
   defaultConfig {
-    applicationId "vn.tiki.noadapterdatabinding.sample"
+    applicationId "vn.tiki.noadapter2.databinding.sample"
     minSdkVersion rootProject.ext.minSdkVersion
     targetSdkVersion rootProject.ext.compileSdkVersion
     versionCode 1
