@@ -4,17 +4,15 @@
   <data>
 
     <variable
-      name="onClick"
-      type="android.view.View.OnClickListener"/>
+        name="onClick"
+        type="android.view.View.OnClickListener"/>
 
     <variable
-      name="item"
-      type="java.lang.Object"/>
+        name="item"
+        type="java.lang.Object"/>
 
   </data>
 
-  <View
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"/>
-
+  <View android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 </layout>

@@ -82,7 +82,7 @@ public class TextViewHolder extends AbsViewHolder {
 
 ~~~java
 adapter = new OnlyAdapter.Builder()
-    .viewHolderSelector(new ViewHolderSelector() {
+    .viewHolderFactory(new ViewHolderSelector() {
       @Override public AbsViewHolder viewHolderForType(ViewGroup parent, int type) {
         return TextViewHolder.create(parent);
       }
@@ -207,12 +207,12 @@ public class TextViewHolder extends AbsViewHolder {
 
 ~~~java
 adapter = new OnlyAdapter.Builder()
-    .typeDeterminer(new TypeDeterminer() {
+    .typeFactory(new TypeDeterminer() {
       @Override public int typeOf(Object item) {
         return item instanceof Color ? 1 : 0;
       }
     })
-    .viewHolderSelector(new ViewHolderSelector() {
+    .viewHolderFactory(new ViewHolderSelector() {
       @Override public AbsViewHolder viewHolderForType(ViewGroup parent, int type) {
         switch (type) {
           case 1:
@@ -306,7 +306,7 @@ adapter.setItems(items);
 #### 2. Setup Adapter
 
 ~~~java
-final BindingViewHolderSelector viewHolderSelector = new BindingViewHolderSelector.Builder()
+final BindingViewHolderSelector viewHolderFactory = new BindingViewHolderSelector.Builder()
     .layoutSelector(new LayoutSelector() {
       @Override public int layoutForType(int type) {
         return R.layout.item_text;
@@ -314,7 +314,7 @@ final BindingViewHolderSelector viewHolderSelector = new BindingViewHolderSelect
     })
     .build();
 adapter = new OnlyAdapter.Builder()
-    .viewHolderSelector(viewHolderSelector)
+    .viewHolderFactory(viewHolderFactory)
     .onItemClickListener(new OnItemClickListener() {
       @Override public void onItemClick(View view, Object item, int position) {
         Toast

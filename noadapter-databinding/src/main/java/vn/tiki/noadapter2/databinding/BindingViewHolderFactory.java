@@ -4,20 +4,19 @@ import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-
 import vn.tiki.noadapter2.AbsViewHolder;
-import vn.tiki.noadapter2.ViewHolderSelector;
+import vn.tiki.noadapter2.ViewHolderFactory;
 
 /**
  * Created by Giang Nguyen on 12/17/16.
  */
 
-public class BindingViewHolderSelector implements ViewHolderSelector {
+public class BindingViewHolderFactory implements ViewHolderFactory {
 
   private LayoutSelector layoutSelector;
   private ExtraBinding extraBinding;
 
-  private BindingViewHolderSelector(LayoutSelector layoutSelector, ExtraBinding extraBinding) {
+  private BindingViewHolderFactory(LayoutSelector layoutSelector, ExtraBinding extraBinding) {
     this.layoutSelector = layoutSelector;
     this.extraBinding = extraBinding;
   }
@@ -44,8 +43,8 @@ public class BindingViewHolderSelector implements ViewHolderSelector {
       return this;
     }
 
-    public BindingViewHolderSelector build() {
-      return new BindingViewHolderSelector(layoutSelector, extraBinding);
+    public BindingViewHolderFactory build() {
+      return new BindingViewHolderFactory(layoutSelector, extraBinding);
     }
   }
 }

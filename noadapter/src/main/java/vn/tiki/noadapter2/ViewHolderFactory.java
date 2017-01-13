@@ -5,7 +5,7 @@ import android.view.ViewGroup;
 /**
  * Created by Giang Nguyen on 9/24/16.
  */
-public interface ViewHolderSelector {
+public interface ViewHolderFactory {
 
   /**
    * Create viewHolder for view type

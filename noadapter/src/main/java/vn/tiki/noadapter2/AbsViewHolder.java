@@ -1,5 +1,6 @@
 package vn.tiki.noadapter2;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -13,6 +14,7 @@ public class AbsViewHolder extends RecyclerView.ViewHolder implements View.OnCli
 
   public AbsViewHolder(View view) {
     super(view);
+    registerOnClickOn(view);
   }
 
   /**
@@ -31,12 +33,16 @@ public class AbsViewHolder extends RecyclerView.ViewHolder implements View.OnCli
     // NoOp
   }
 
+  protected void registerOnClickOn(@NonNull View target) {
+    target.setOnClickListener(this);
+  }
+
   protected void setOnItemClickListener(OnItemClickListener onItemClickListener) {
     this.onItemClickListener = onItemClickListener;
   }
 
   @Override
-  public void onClick(View view) {
+  public final void onClick(View view) {
     final int position = getAdapterPosition();
     if (onItemClickListener != null && position != RecyclerView.NO_POSITION) {
       onItemClickListener.onItemClick(view, item, position);

@@ -21,18 +21,18 @@ public class BuilderTest {
   }
 
   @Test
-  public void shouldVerifyViewHolderSelector() throws Exception {
+  public void shouldVerifyViewHolderFactory() throws Exception {
     try {
       builder.build();
     } catch (Exception e) {
       assertTrue(e instanceof NullPointerException);
-      assertEquals("Null viewHolderSelector", e.getMessage());
+      assertEquals("Null viewHolderFactory", e.getMessage());
     }
   }
 
   @Test
   public void shouldBuildAdapterWithDefaultDiffCallback() throws Exception {
-    final OnlyAdapter adapter = builder.viewHolderSelector(new ViewHolderSelector() {
+    final OnlyAdapter adapter = builder.viewHolderFactory(new ViewHolderFactory() {
       @Override public AbsViewHolder viewHolderForType(ViewGroup parent, int type) {
         return new AbsViewHolder(parent);
       }
@@ -42,7 +42,7 @@ public class BuilderTest {
 
   @Test
   public void shouldBuildAdapterWithDefaultTypeDeterminer() throws Exception {
-    final ViewHolderSelector viewHolderSelector = new ViewHolderSelector() {
+    final ViewHolderFactory viewHolderFactory = new ViewHolderFactory() {
       @Override public AbsViewHolder viewHolderForType(ViewGroup parent, int type) {
         return new AbsViewHolder(parent);
       }
@@ -57,16 +57,16 @@ public class BuilderTest {
       }
     };
     final OnlyAdapter adapter = builder
-        .viewHolderSelector(viewHolderSelector)
+        .viewHolderFactory(viewHolderFactory)
         .diffCallback(diffCallback)
         .build();
 
-    assertEquals(new DefaultTypeDeterminer(), adapter.typeDeterminer);
+    assertEquals(new DefaultTypeFactory(), adapter.typeFactory);
   }
 
   @Test
   public void shouldBuildAdapter() throws Exception {
-    final ViewHolderSelector viewHolderSelector = new ViewHolderSelector() {
+    final ViewHolderFactory viewHolderFactory = new ViewHolderFactory() {
       @Override public AbsViewHolder viewHolderForType(ViewGroup parent, int type) {
         return new AbsViewHolder(parent);
       }
@@ -80,7 +80,7 @@ public class BuilderTest {
         return false;
       }
     };
-    final TypeDeterminer typeDeterminer = new TypeDeterminer() {
+    final TypeFactory typeFactory = new TypeFactory() {
       @Override public int typeOf(Object item) {
         return 0;
       }
@@ -91,14 +91,14 @@ public class BuilderTest {
       }
     };
     final OnlyAdapter adapter = builder
-        .typeDeterminer(typeDeterminer)
-        .viewHolderSelector(viewHolderSelector)
+        .typeFactory(typeFactory)
+        .viewHolderFactory(viewHolderFactory)
         .diffCallback(diffCallback)
         .onItemClickListener(onItemClickListener)
         .build();
 
-    assertEquals(typeDeterminer, adapter.typeDeterminer);
-    assertEquals(viewHolderSelector, adapter.viewHolderSelector);
+    assertEquals(typeFactory, adapter.typeFactory);
+    assertEquals(viewHolderFactory, adapter.viewHolderFactory);
     assertEquals(new DiffUtilCallback(diffCallback), adapter.diffUtilCallback);
     assertEquals(onItemClickListener, adapter.onItemClickListener);
   }

@@ -18,8 +18,8 @@ import vn.tiki.noadapter2.AbsViewHolder;
 import vn.tiki.noadapter2.DiffCallback;
 import vn.tiki.noadapter2.OnItemClickListener;
 import vn.tiki.noadapter2.OnlyAdapter;
-import vn.tiki.noadapter2.TypeDeterminer;
-import vn.tiki.noadapter2.ViewHolderSelector;
+import vn.tiki.noadapter2.TypeFactory;
+import vn.tiki.noadapter2.ViewHolderFactory;
 import vn.tiki.noadapter2.sample.entity.Color;
 import vn.tiki.noadapter2.sample.viewholder.ColorViewHolder;
 import vn.tiki.noadapter2.sample.viewholder.TextViewHolder;
@@ -54,12 +54,12 @@ public class MainActivity extends AppCompatActivity {
     rvList.setHasFixedSize(true);
 
     adapter = new OnlyAdapter.Builder()
-        .typeDeterminer(new TypeDeterminer() {
+        .typeFactory(new TypeFactory() {
           @Override public int typeOf(Object item) {
             return item instanceof Color ? 1 : 0;
           }
         })
-        .viewHolderSelector(new ViewHolderSelector() {
+        .viewHolderFactory(new ViewHolderFactory() {
           @Override public AbsViewHolder viewHolderForType(ViewGroup parent, int type) {
             switch (type) {
               case 1:

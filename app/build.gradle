@@ -29,8 +29,8 @@ dependencies {
   androidTestCompile(rootProject.ext.espressoCore, {
     exclude group: 'com.android.support', module: 'support-annotations'
   })
-  compile 'com.android.support:appcompat-v7:25.0.1'
   compile rootProject.ext.appCompatV7
+  compile rootProject.ext.cardViewV7
   compile rootProject.ext.noAdapter
   testCompile rootProject.ext.junit
 }

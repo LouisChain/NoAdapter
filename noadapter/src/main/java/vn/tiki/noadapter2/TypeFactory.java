@@ -4,7 +4,7 @@ package vn.tiki.noadapter2;
  * Created by Giang Nguyen on 9/24/16.
  */
 
-public interface TypeDeterminer {
+public interface TypeFactory {
 
   /**
    * Determine type of each item which will be used to select layout

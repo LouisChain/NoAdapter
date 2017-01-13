@@ -4,7 +4,7 @@ package vn.tiki.noadapter2;
  * Created by Giang Nguyen on 12/17/16.
  */
 
-class DefaultTypeDeterminer implements TypeDeterminer {
+class DefaultTypeFactory implements TypeFactory {
   @Override public int typeOf(Object item) {
     return 0;
   }

@@ -13,17 +13,17 @@ import java.util.List;
  * Created by Giang Nguyen on 8/14/16.
  */
 public class OnlyAdapter extends RecyclerView.Adapter<AbsViewHolder> {
-  final TypeDeterminer typeDeterminer;
-  final ViewHolderSelector viewHolderSelector;
+  final TypeFactory typeFactory;
+  final ViewHolderFactory viewHolderFactory;
   final DiffUtilCallback diffUtilCallback;
   OnItemClickListener onItemClickListener;
   private List<?> items = Collections.emptyList();
 
-  private OnlyAdapter(@NonNull TypeDeterminer typeDeterminer,
-                      @NonNull ViewHolderSelector viewHolderSelector,
+  private OnlyAdapter(@NonNull TypeFactory typeFactory,
+                      @NonNull ViewHolderFactory viewHolderFactory,
                       DiffCallback diffCallback) {
-    this.typeDeterminer = typeDeterminer;
-    this.viewHolderSelector = viewHolderSelector;
+    this.typeFactory = typeFactory;
+    this.viewHolderFactory = viewHolderFactory;
     this.diffUtilCallback = new DiffUtilCallback(diffCallback);
   }
 
@@ -45,13 +45,13 @@ public class OnlyAdapter extends RecyclerView.Adapter<AbsViewHolder> {
 
   @Override
   public AbsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    return viewHolderSelector.viewHolderForType(parent, viewType);
+    return viewHolderFactory.viewHolderForType(parent, viewType);
   }
 
   @Override
   public int getItemViewType(int position) {
     final Object item = items.get(position);
-    return typeDeterminer.typeOf(item);
+    return typeFactory.typeOf(item);
   }
 
   @Override
@@ -71,20 +71,25 @@ public class OnlyAdapter extends RecyclerView.Adapter<AbsViewHolder> {
     return items == null ? 0 : items.size();
   }
 
+  public static Builder builder() {
+    return new Builder();
+  }
+
   public static class Builder {
 
-    private ViewHolderSelector viewHolderSelector;
-    private TypeDeterminer typeDeterminer;
+    private ViewHolderFactory viewHolderFactory;
+    private TypeFactory typeFactory;
     private OnItemClickListener onItemClickListener;
     private DiffCallback diffCallback;
 
-    public Builder typeDeterminer(TypeDeterminer typeDeterminer) {
-      this.typeDeterminer = typeDeterminer;
+
+    public Builder typeFactory(TypeFactory typeFactory) {
+      this.typeFactory = typeFactory;
       return this;
     }
 
-    public Builder viewHolderSelector(ViewHolderSelector viewHolderSelector) {
-      this.viewHolderSelector = viewHolderSelector;
+    public Builder viewHolderFactory(ViewHolderFactory viewHolderFactory) {
+      this.viewHolderFactory = viewHolderFactory;
       return this;
     }
 
@@ -99,16 +104,16 @@ public class OnlyAdapter extends RecyclerView.Adapter<AbsViewHolder> {
     }
 
     public OnlyAdapter build() {
-      if (viewHolderSelector == null) {
-        throw new NullPointerException("Null viewHolderSelector");
+      if (viewHolderFactory == null) {
+        throw new NullPointerException("Null viewHolderFactory");
       }
-      if (typeDeterminer == null) {
-        typeDeterminer = new DefaultTypeDeterminer();
+      if (typeFactory == null) {
+        typeFactory = new DefaultTypeFactory();
       }
       if (diffCallback == null) {
         diffCallback = new DefaultDiffCallback();
       }
-      final OnlyAdapter adapter = new OnlyAdapter(typeDeterminer, viewHolderSelector, diffCallback);
+      final OnlyAdapter adapter = new OnlyAdapter(typeFactory, viewHolderFactory, diffCallback);
       if (onItemClickListener != null) {
         adapter.setOnItemClickListener(onItemClickListener);
       }

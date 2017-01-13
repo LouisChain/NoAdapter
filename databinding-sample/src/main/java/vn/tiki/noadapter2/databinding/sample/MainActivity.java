@@ -14,8 +14,8 @@ import java.util.Random;
 import vn.tiki.noadapter2.DiffCallback;
 import vn.tiki.noadapter2.OnItemClickListener;
 import vn.tiki.noadapter2.OnlyAdapter;
-import vn.tiki.noadapter2.TypeDeterminer;
-import vn.tiki.noadapter2.databinding.BindingViewHolderSelector;
+import vn.tiki.noadapter2.TypeFactory;
+import vn.tiki.noadapter2.databinding.BindingViewHolderFactory;
 import vn.tiki.noadapter2.databinding.LayoutSelector;
 import vn.tiki.noadapter2.databinding.sample.entity.Color;
 import vn.tiki.noadapterdatabinding.sample.R;
@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     rvList.setHasFixedSize(true);
 
 
-    final BindingViewHolderSelector viewHolderSelector = new BindingViewHolderSelector.Builder()
+    final BindingViewHolderFactory viewHolderFactory = new BindingViewHolderFactory.Builder()
         .layoutSelector(new LayoutSelector() {
           @Override public int layoutForType(int type) {
             switch (type) {
@@ -64,12 +64,12 @@ public class MainActivity extends AppCompatActivity {
         .build();
 
     adapter = new OnlyAdapter.Builder()
-        .typeDeterminer(new TypeDeterminer() {
+        .typeFactory(new TypeFactory() {
           @Override public int typeOf(Object item) {
             return item instanceof Color ? 1 : 0;
           }
         })
-        .viewHolderSelector(viewHolderSelector)
+        .viewHolderFactory(viewHolderFactory)
         .onItemClickListener(new OnItemClickListener() {
           @Override public void onItemClick(View view, Object item, int position) {
             Toast
