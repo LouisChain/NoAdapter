@@ -1,10 +1,12 @@
 package vn.tiki.noadapter2.databinding.sample;
 
+import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 import java.util.ArrayList;
@@ -14,14 +16,15 @@ import java.util.Random;
 import vn.tiki.noadapter2.DiffCallback;
 import vn.tiki.noadapter2.OnItemClickListener;
 import vn.tiki.noadapter2.OnlyAdapter;
-import vn.tiki.noadapter2.TypeFactory;
-import vn.tiki.noadapter2.databinding.BindingViewHolderFactory;
-import vn.tiki.noadapter2.databinding.LayoutSelector;
+import vn.tiki.noadapter2.databinding.BindingBuilder;
+import vn.tiki.noadapter2.databinding.ExtraBinding;
+import vn.tiki.noadapter2.databinding.LayoutFactory;
 import vn.tiki.noadapter2.databinding.sample.entity.Color;
 import vn.tiki.noadapterdatabinding.sample.R;
 
 public class MainActivity extends AppCompatActivity {
   private static final Random RANDOM = new Random();
+  private static final String TAG = "MainActivity";
   private OnlyAdapter adapter;
   private List<Object> items;
 
@@ -49,27 +52,28 @@ public class MainActivity extends AppCompatActivity {
     rvList.setLayoutManager(new GridLayoutManager(this, 5, GridLayoutManager.VERTICAL, false));
     rvList.setHasFixedSize(true);
 
-
-    final BindingViewHolderFactory viewHolderFactory = new BindingViewHolderFactory.Builder()
-        .layoutSelector(new LayoutSelector() {
-          @Override public int layoutForType(int type) {
-            switch (type) {
-              case 1:
-                return R.layout.item_color;
-              default:
-                return R.layout.item_text;
+    adapter = new BindingBuilder()
+        .layoutFactory(new LayoutFactory() {
+          @Override public int layoutOf(Object item) {
+            if (item instanceof Color) {
+              return R.layout.item_color;
             }
+            return R.layout.item_text;
           }
         })
-        .build();
-
-    adapter = new OnlyAdapter.Builder()
-        .typeFactory(new TypeFactory() {
-          @Override public int typeOf(Object item) {
-            return item instanceof Color ? 1 : 0;
+        .extraBinding(new ExtraBinding() {
+          @Override public void onBind(ViewDataBinding binding, Object item, int position) {
+            Log.d(
+                TAG,
+                "onBind() called with: binding = ["
+                    + binding
+                    + "], item = ["
+                    + item
+                    + "], position = ["
+                    + position
+                    + "]");
           }
         })
-        .viewHolderFactory(viewHolderFactory)
         .onItemClickListener(new OnItemClickListener() {
           @Override public void onItemClick(View view, Object item, int position) {
             Toast
@@ -92,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
           }
         })
         .build();
+
     rvList.setAdapter(adapter);
 
     items = generateItems(4);

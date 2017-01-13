@@ -82,7 +82,7 @@ public class TextViewHolder extends AbsViewHolder {
 
 ~~~java
 adapter = new OnlyAdapter.Builder()
-    .viewHolderFactory(new ViewHolderSelector() {
+    .viewHolderFactory(new ViewHolderFactory() {
       @Override public AbsViewHolder viewHolderForType(ViewGroup parent, int type) {
         return TextViewHolder.create(parent);
       }
@@ -207,12 +207,12 @@ public class TextViewHolder extends AbsViewHolder {
 
 ~~~java
 adapter = new OnlyAdapter.Builder()
-    .typeFactory(new TypeDeterminer() {
+    .typeFactory(new TypeFactory() {
       @Override public int typeOf(Object item) {
         return item instanceof Color ? 1 : 0;
       }
     })
-    .viewHolderFactory(new ViewHolderSelector() {
+    .viewHolderFactory(new ViewHolderFactory() {
       @Override public AbsViewHolder viewHolderForType(ViewGroup parent, int type) {
         switch (type) {
           case 1:
@@ -306,23 +306,20 @@ adapter.setItems(items);
 #### 2. Setup Adapter
 
 ~~~java
-final BindingViewHolderSelector viewHolderFactory = new BindingViewHolderSelector.Builder()
-    .layoutSelector(new LayoutSelector() {
-      @Override public int layoutForType(int type) {
-        return R.layout.item_text;
-      }
-    })
-    .build();
-adapter = new OnlyAdapter.Builder()
-    .viewHolderFactory(viewHolderFactory)
-    .onItemClickListener(new OnItemClickListener() {
-      @Override public void onItemClick(View view, Object item, int position) {
-        Toast
-            .makeText(MainActivity.this, "Clicked on item: " + item, Toast.LENGTH_SHORT)
-            .show();
-      }
-    })
-    .build();
+adapter = new BindingBuilder()
+        .layoutFactory(new LayoutFactory() {
+          @Override public int layoutOf(Object item) {
+            return R.layout.item_text;
+          }
+        })
+        .onItemClickListener(new OnItemClickListener() {
+          @Override public void onItemClick(View view, Object item, int position) {
+            Toast
+                .makeText(MainActivity.this, "Clicked on item: " + item, Toast.LENGTH_SHORT)
+                .show();
+          }
+        })
+        .build();
 rvList.setAdapter(adapter);
 ~~~
 
