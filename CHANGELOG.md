@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+Version 2.0.1 *(2017-04-9)*
+----------------------------
+* Change package name to vn.tiki.noadapter2
+* Tiny improvements
+
 Version 2.0.0 *(2016-12-18)*
 ----------------------------
 
