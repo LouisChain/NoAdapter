@@ -1,8 +1,8 @@
 package vn.tiki.noadapter2;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.util.DiffUtil;
-
 import java.util.List;
 
 /**
@@ -36,15 +36,31 @@ class DiffUtilCallback extends DiffUtil.Callback {
   }
 
   @Override public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-    final Object oldItem = items.get(oldItemPosition);
-    final Object newItem = newItems.get(newItemPosition);
-    return diffCallback.areItemsTheSame(oldItem, newItem);
+    final Object oldItem = getOldItem(oldItemPosition);
+    final Object newItem = getNewItem(newItemPosition);
+    if (oldItem == null) {
+      return newItem == null;
+    } else {
+      return newItem != null && diffCallback.areItemsTheSame(oldItem, newItem);
+    }
   }
 
   @Override public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-    final Object oldItem = items.get(oldItemPosition);
-    final Object newItem = newItems.get(newItemPosition);
-    return diffCallback.areContentsTheSame(oldItem, newItem);
+    final Object oldItem = getOldItem(oldItemPosition);
+    final Object newItem = getNewItem(newItemPosition);
+    if (oldItem == null) {
+      return newItem == null;
+    } else {
+      return diffCallback.areContentsTheSame(oldItem, newItem);
+    }
+  }
+
+  @Nullable private Object getNewItem(int newItemPosition) {
+    return newItemPosition >= newItems.size() ? null : newItems.get(newItemPosition);
+  }
+
+  @Nullable private Object getOldItem(int oldItemPosition) {
+    return oldItemPosition >= items.size() ? null : items.get(oldItemPosition);
   }
 
   @Override public boolean equals(Object o) {
