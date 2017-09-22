@@ -8,12 +8,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-
 import vn.tiki.noadapter2.AbsViewHolder;
 import vn.tiki.noadapter2.DiffCallback;
 import vn.tiki.noadapter2.OnItemClickListener;
@@ -40,6 +38,11 @@ public class MainActivity extends AppCompatActivity {
         addItem();
       }
     });
+    findViewById(R.id.btAdd100).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        add100Items();
+      }
+    });
     findViewById(R.id.btClear).setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         clearItems();
@@ -53,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     rvList.setLayoutManager(new GridLayoutManager(this, 5, GridLayoutManager.VERTICAL, false));
     rvList.setHasFixedSize(true);
 
-    adapter = new OnlyAdapter.Builder()
+    adapter = OnlyAdapter.builder()
         .typeFactory(new TypeFactory() {
           @Override public int typeOf(Object item) {
             return item instanceof Color ? 1 : 0;
@@ -93,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
         .build();
     rvList.setAdapter(adapter);
 
-    items = generateItems(4);
+    items = generateItems(0, 4);
     adapter.setItems(items);
   }
 
@@ -112,11 +115,16 @@ public class MainActivity extends AppCompatActivity {
     adapter.setItems(items);
   }
 
-  public List<Object> generateItems(int size) {
+  private void add100Items() {
+    items.addAll(generateItems(items.size(), 100));
+    adapter.setItems(items);
+  }
+
+  public List<Object> generateItems(int startIndex, int size) {
     final ArrayList<Object> colors = new ArrayList<>(size);
     for (int i = 0; i < size; i++) {
       final Object item;
-      item = randomItem(i);
+      item = randomItem(i + startIndex);
       colors.add(item);
     }
     return colors;
