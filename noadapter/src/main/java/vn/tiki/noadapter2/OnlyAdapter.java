@@ -64,7 +64,7 @@ public class OnlyAdapter extends RecyclerView.Adapter<AbsViewHolder> {
     } else {
       final List<?> oldItems = items;
       int maxItemCount = newItems.size() > oldItems.size() ? newItems.size() : oldItems.size();
-      if (maxItemCount < 100) {
+      if (maxItemCount < 50) {
         // we don't need to calculate in background for less than 100 items.
         final DiffUtil.DiffResult diffResult = calculateDiff(oldItems, newItems, diffCallback);
         postUpdate(newItems, diffResult);
