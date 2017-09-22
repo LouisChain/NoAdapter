@@ -11,24 +11,18 @@ import java.util.List;
 
 class DiffUtilCallback extends DiffUtil.Callback {
 
+  private final List<?> oldItems;
+  private final List<?> newItems;
   private final DiffCallback diffCallback;
-  private List<?> items;
-  private List<?> newItems;
 
-  DiffUtilCallback(@NonNull DiffCallback diffCallback) {
+  DiffUtilCallback(List<?> oldItems, List<?> newItems, @NonNull DiffCallback diffCallback) {
+    this.oldItems = oldItems;
+    this.newItems = newItems;
     this.diffCallback = diffCallback;
   }
 
-  void setItems(List<?> items) {
-    this.items = items;
-  }
-
-  void setNewItems(List<?> newItems) {
-    this.newItems = newItems;
-  }
-
   @Override public int getOldListSize() {
-    return items == null ? 0 : items.size();
+    return oldItems == null ? 0 : oldItems.size();
   }
 
   @Override public int getNewListSize() {
@@ -51,7 +45,7 @@ class DiffUtilCallback extends DiffUtil.Callback {
     if (oldItem == null) {
       return newItem == null;
     } else {
-      return diffCallback.areContentsTheSame(oldItem, newItem);
+      return newItem != null && diffCallback.areContentsTheSame(oldItem, newItem);
     }
   }
 
@@ -60,20 +54,23 @@ class DiffUtilCallback extends DiffUtil.Callback {
   }
 
   @Nullable private Object getOldItem(int oldItemPosition) {
-    return oldItemPosition >= items.size() ? null : items.get(oldItemPosition);
-  }
-
-  @Override public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-
-    DiffUtilCallback that = (DiffUtilCallback) o;
-
-    return diffCallback.equals(that.diffCallback);
-
+    return oldItemPosition >= oldItems.size() ? null : oldItems.get(oldItemPosition);
   }
 
   @Override public int hashCode() {
     return diffCallback.hashCode();
+  }
+
+  @Override public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+
+    DiffUtilCallback that = (DiffUtilCallback) o;
+
+    return diffCallback.equals(that.diffCallback);
   }
 }

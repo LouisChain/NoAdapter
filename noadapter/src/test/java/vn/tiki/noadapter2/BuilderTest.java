@@ -2,7 +2,6 @@ package vn.tiki.noadapter2;
 
 import android.view.View;
 import android.view.ViewGroup;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -37,7 +36,7 @@ public class BuilderTest {
         return new AbsViewHolder(parent);
       }
     }).build();
-    assertEquals(new DiffUtilCallback(new DefaultDiffCallback()), adapter.diffUtilCallback);
+    assertTrue(adapter.diffCallback instanceof DefaultDiffCallback);
   }
 
   @Test
@@ -99,7 +98,7 @@ public class BuilderTest {
 
     assertEquals(typeFactory, adapter.typeFactory);
     assertEquals(viewHolderFactory, adapter.viewHolderFactory);
-    assertEquals(new DiffUtilCallback(diffCallback), adapter.diffUtilCallback);
+    assertEquals(diffCallback, adapter.diffCallback);
     assertEquals(onItemClickListener, adapter.onItemClickListener);
   }
 
