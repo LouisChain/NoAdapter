@@ -2,13 +2,14 @@ import com.android.build.gradle.internal.tasks.AndroidTestTask
 
 buildscript {
   repositories {
+    google()
     jcenter()
     maven { url "https://jitpack.io" }
     mavenLocal()
   }
 
   dependencies {
-    classpath 'com.android.tools.build:gradle:2.3.0'
+    classpath 'com.android.tools.build:gradle:3.0.0-beta6'
     classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
     classpath 'com.dicedmelon.gradle:jacoco-android:0.1.1'
   }
@@ -21,6 +22,7 @@ subprojects {
 
   buildscript {
     repositories {
+      google()
       jcenter()
       mavenCentral()
       mavenLocal()
@@ -29,6 +31,7 @@ subprojects {
   }
 
   repositories {
+    google()
     jcenter()
     mavenCentral()
     mavenCentral()

@@ -40,13 +40,13 @@ android {
 }
 
 dependencies {
-  compile fileTree(dir: 'libs', include: ['*.jar'])
-  compile rootProject.ext.supportAnnotations
-  compile rootProject.ext.appCompatV7
-  compile rootProject.ext.recyclerViewV7
-  compile rootProject.ext.noAdapter
-  testCompile rootProject.ext.junit
-  androidTestCompile(rootProject.ext.espressoCore, {
+  implementation fileTree(dir: 'libs', include: ['*.jar'])
+  implementation rootProject.ext.supportAnnotations
+  implementation rootProject.ext.appCompatV7
+  implementation rootProject.ext.recyclerViewV7
+  implementation rootProject.ext.noAdapter
+  testImplementation rootProject.ext.junit
+  androidTestImplementation(rootProject.ext.espressoCore, {
     exclude group: 'com.android.support', module: 'support-annotations'
   })
 }

@@ -29,12 +29,14 @@ android {
 }
 
 dependencies {
-  compile fileTree(dir: 'libs', include: ['*.jar'])
-  androidTestCompile(rootProject.ext.espressoCore, {
+  implementation fileTree(dir: 'libs', include: ['*.jar'])
+  androidTestImplementation(rootProject.ext.espressoCore, {
     exclude group: 'com.android.support', module: 'support-annotations'
   })
-  compile rootProject.ext.appCompatV7
-  compile rootProject.ext.cardViewV7
-  compile rootProject.ext.noAdapterDataBinding
-  testCompile rootProject.ext.junit
+  implementation rootProject.ext.recyclerViewV7
+  implementation rootProject.ext.appCompatV7
+  implementation rootProject.ext.cardViewV7
+  implementation rootProject.ext.noAdapter
+  implementation rootProject.ext.noAdapterDataBinding
+  testImplementation rootProject.ext.junit
 }

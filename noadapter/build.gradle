@@ -38,12 +38,12 @@ android {
 }
 
 dependencies {
-  compile fileTree(dir: 'libs', include: ['*.jar'])
-  compile rootProject.ext.supportAnnotations
-  compile rootProject.ext.recyclerViewV7
-  testCompile rootProject.ext.junit
-  testCompile rootProject.ext.mockito
-  androidTestCompile(rootProject.ext.espressoCore, {
+  implementation fileTree(dir: 'libs', include: ['*.jar'])
+  implementation rootProject.ext.supportAnnotations
+  implementation rootProject.ext.recyclerViewV7
+  testImplementation rootProject.ext.junit
+  testImplementation rootProject.ext.mockito
+  androidTestImplementation(rootProject.ext.espressoCore, {
     exclude group: 'com.android.support', module: 'support-annotations'
   })
 }
