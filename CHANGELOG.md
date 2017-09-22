@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+Version 2.0.2 *(2017-09-22)*
+---------------------------
+* Improve performance by perform diff calculation from background thread when list have at least 50
+items.
+
 Version 2.0.1 *(2017-04-9)*
 ----------------------------
 * Change package name to vn.tiki.noadapter2
