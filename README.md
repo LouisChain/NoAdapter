@@ -3,9 +3,15 @@
 [![Build Status](https://travis-ci.org/tikivn/NoAdapter.svg?branch=master)](https://travis-ci.org/tikivn/NoAdapter)
 [![codecov](https://codecov.io/gh/tikivn/NoAdapter/branch/master/graph/badge.svg)](https://codecov.io/gh/tikivn/NoAdapter)
 
-Too much boilerplate and effort to implement a list using RecyclerView. But, most of them can be omitted.
-
 ![](./favicon.png)
+
+Too much boilerplate and effort to implement a list using RecyclerView. But, most of them can be omitted. This library will help you to focus on what should be display on the list instead of how.
+
+- Eliminate boilerplate code to create Adapter.
+- Eliminate boilerplate code to select view type and view holder.
+- Eliminate boilerplate code to calculate diff to update the list.
+- Diff calculation will be performed on background thread when list have more than 50 items. 
+- And many more.
 
 ## Table of contents
 - [Demo](#demo)
