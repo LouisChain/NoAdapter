@@ -23,6 +23,7 @@ class OnlyViewHolder extends AbsViewHolder {
   public void bind(Object item) {
     super.bind(item);
     binding.setVariable(vn.tiki.noadapter2.databinding.BR.item, item);
+    binding.executePendingBindings();
     final int position = getAdapterPosition();
     if (extraBinding != null && position > RecyclerView.NO_POSITION) {
       extraBinding.onBind(binding, item, position);
