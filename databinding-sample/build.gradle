@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
   compileSdkVersion rootProject.ext.compileSdkVersion
-  buildToolsVersion rootProject.ext.buildToolsVersion
+
   defaultConfig {
     applicationId "vn.tiki.noadapter2.databinding.sample"
     minSdkVersion rootProject.ext.minSdkVersion
@@ -19,11 +19,25 @@ android {
   dataBinding {
     enabled = true
   }
-
+  signingConfigs {
+    debug {
+      storeFile file('./debug.keystore')
+      keyAlias 'androiddebugkey'
+      keyPassword 'android'
+      storePassword 'android'
+    }
+    release {
+      storeFile file('./debug.keystore')
+      keyAlias 'androiddebugkey'
+      keyPassword 'android'
+      storePassword 'android'
+    }
+  }
   buildTypes {
     release {
-      minifyEnabled false
+      minifyEnabled true
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+      signingConfig signingConfigs.debug
     }
   }
 }
@@ -36,7 +50,7 @@ dependencies {
   implementation rootProject.ext.recyclerViewV7
   implementation rootProject.ext.appCompatV7
   implementation rootProject.ext.cardViewV7
-  implementation rootProject.ext.noAdapter
-  implementation rootProject.ext.noAdapterDataBinding
+  implementation 'vn.tiki.noadapter2:noadapter:2.0.2'
+  implementation 'vn.tiki.noadapter2:noadapter-databinding:2.0.2'
   testImplementation rootProject.ext.junit
 }

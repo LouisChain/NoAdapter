@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
   compileSdkVersion rootProject.ext.compileSdkVersion
-  buildToolsVersion rootProject.ext.buildToolsVersion
+
   defaultConfig {
     applicationId "vn.tiki.noadapter.sample"
     minSdkVersion rootProject.ext.minSdkVersion
@@ -16,10 +16,25 @@ android {
     preDexLibraries = !rootProject.ext.ci
   }
 
+  signingConfigs {
+    debug {
+      storeFile file('./debug.keystore')
+      keyAlias 'androiddebugkey'
+      keyPassword 'android'
+      storePassword 'android'
+    }
+    release {
+      storeFile file('./debug.keystore')
+      keyAlias 'androiddebugkey'
+      keyPassword 'android'
+      storePassword 'android'
+    }
+  }
   buildTypes {
     release {
-      minifyEnabled false
+      minifyEnabled true
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+      signingConfig signingConfigs.debug
     }
   }
 }

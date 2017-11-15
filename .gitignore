@@ -9,3 +9,6 @@
 .externalNativeBuild
 .idea/
 .idea/
+.mainframer
+mainframer
+mainframer.sh

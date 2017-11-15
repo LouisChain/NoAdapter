@@ -1,12 +1,11 @@
 package vn.tiki.noadapter2;
 
-import android.view.View;
-import android.view.ViewGroup;
-import org.junit.Before;
-import org.junit.Test;
-
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
+
+import android.view.View;
+import android.view.ViewGroup;
+import org.junit.*;
 
 /**
  * Created by Giang Nguyen on 12/17/16.
@@ -20,50 +19,6 @@ public class BuilderTest {
   }
 
   @Test
-  public void shouldVerifyViewHolderFactory() throws Exception {
-    try {
-      builder.build();
-    } catch (Exception e) {
-      assertTrue(e instanceof NullPointerException);
-      assertEquals("Null viewHolderFactory", e.getMessage());
-    }
-  }
-
-  @Test
-  public void shouldBuildAdapterWithDefaultDiffCallback() throws Exception {
-    final OnlyAdapter adapter = builder.viewHolderFactory(new ViewHolderFactory() {
-      @Override public AbsViewHolder viewHolderForType(ViewGroup parent, int type) {
-        return new AbsViewHolder(parent);
-      }
-    }).build();
-    assertTrue(adapter.diffCallback instanceof DefaultDiffCallback);
-  }
-
-  @Test
-  public void shouldBuildAdapterWithDefaultTypeDeterminer() throws Exception {
-    final ViewHolderFactory viewHolderFactory = new ViewHolderFactory() {
-      @Override public AbsViewHolder viewHolderForType(ViewGroup parent, int type) {
-        return new AbsViewHolder(parent);
-      }
-    };
-    final DiffCallback diffCallback = new DiffCallback() {
-      @Override public boolean areItemsTheSame(Object oldItem, Object newItem) {
-        return false;
-      }
-
-      @Override public boolean areContentsTheSame(Object oldItem, Object newItem) {
-        return false;
-      }
-    };
-    final OnlyAdapter adapter = builder
-        .viewHolderFactory(viewHolderFactory)
-        .diffCallback(diffCallback)
-        .build();
-
-    assertEquals(new DefaultTypeFactory(), adapter.typeFactory);
-  }
-
-  @Test
   public void shouldBuildAdapter() throws Exception {
     final ViewHolderFactory viewHolderFactory = new ViewHolderFactory() {
       @Override public AbsViewHolder viewHolderForType(ViewGroup parent, int type) {
@@ -71,11 +26,11 @@ public class BuilderTest {
       }
     };
     final DiffCallback diffCallback = new DiffCallback() {
-      @Override public boolean areItemsTheSame(Object oldItem, Object newItem) {
+      @Override public boolean areContentsTheSame(Object oldItem, Object newItem) {
         return false;
       }
 
-      @Override public boolean areContentsTheSame(Object oldItem, Object newItem) {
+      @Override public boolean areItemsTheSame(Object oldItem, Object newItem) {
         return false;
       }
     };
@@ -100,6 +55,54 @@ public class BuilderTest {
     assertEquals(viewHolderFactory, adapter.viewHolderFactory);
     assertEquals(diffCallback, adapter.diffCallback);
     assertEquals(onItemClickListener, adapter.onItemClickListener);
+  }
+
+  @Test
+  public void shouldBuildAdapterWithDefaultDiffCallback() throws Exception {
+    final OnlyAdapter adapter = builder.viewHolderFactory(new ViewHolderFactory() {
+      @Override
+      public AbsViewHolder viewHolderForType(ViewGroup parent, int type) {
+        return new AbsViewHolder(parent);
+      }
+    }).build();
+    assertTrue(adapter.diffCallback instanceof DefaultDiffCallback);
+  }
+
+  @Test
+  public void shouldBuildAdapterWithDefaultTypeDeterminer() throws Exception {
+    final ViewHolderFactory viewHolderFactory = new ViewHolderFactory() {
+      @Override
+      public AbsViewHolder viewHolderForType(ViewGroup parent, int type) {
+        return new AbsViewHolder(parent);
+      }
+    };
+    final DiffCallback diffCallback = new DiffCallback() {
+      @Override
+      public boolean areContentsTheSame(Object oldItem, Object newItem) {
+        return false;
+      }
+
+      @Override
+      public boolean areItemsTheSame(Object oldItem, Object newItem) {
+        return false;
+      }
+    };
+    final OnlyAdapter adapter = builder
+        .viewHolderFactory(viewHolderFactory)
+        .diffCallback(diffCallback)
+        .build();
+
+    assertTrue(adapter.typeFactory instanceof DefaultTypeFactory);
+  }
+
+  @Test
+  public void shouldVerifyViewHolderFactory() throws Exception {
+    try {
+      builder.build();
+    } catch (Exception e) {
+      assertTrue(e instanceof NullPointerException);
+      assertEquals("Null viewHolderFactory", e.getMessage());
+    }
   }
 
 }
