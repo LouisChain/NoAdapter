@@ -5,12 +5,14 @@ import static junit.framework.Assert.assertTrue;
 
 import android.view.View;
 import android.view.ViewGroup;
-import org.junit.*;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Created by Giang Nguyen on 12/17/16.
  */
 public class BuilderTest {
+
   private OnlyAdapter.Builder builder;
 
   @Before
@@ -21,26 +23,37 @@ public class BuilderTest {
   @Test
   public void shouldBuildAdapter() throws Exception {
     final ViewHolderFactory viewHolderFactory = new ViewHolderFactory() {
-      @Override public AbsViewHolder viewHolderForType(ViewGroup parent, int type) {
+      @Override
+      public AbsViewHolder viewHolderForType(ViewGroup parent, int type) {
         return new AbsViewHolder(parent);
       }
     };
     final DiffCallback diffCallback = new DiffCallback() {
-      @Override public boolean areContentsTheSame(Object oldItem, Object newItem) {
+      @Override
+      public boolean areContentsTheSame(Object oldItem, Object newItem) {
         return false;
       }
 
-      @Override public boolean areItemsTheSame(Object oldItem, Object newItem) {
+      @Override
+      public boolean areItemsTheSame(Object oldItem, Object newItem) {
         return false;
       }
     };
     final TypeFactory typeFactory = new TypeFactory() {
-      @Override public int typeOf(Object item) {
+      @Override
+      public int typeOf(Object item) {
         return 0;
       }
     };
     final OnItemClickListener onItemClickListener = new OnItemClickListener() {
-      @Override public void onItemClick(View view, Object item, int position) {
+      @Override
+      public void onItemClick(View view, Object item, int position) {
+
+      }
+    };
+    final OnItemBindListener onItemBindListener = new OnItemBindListener() {
+      @Override
+      public void onItemBind(View view, Object item, int position) {
 
       }
     };
@@ -49,12 +62,14 @@ public class BuilderTest {
         .viewHolderFactory(viewHolderFactory)
         .diffCallback(diffCallback)
         .onItemClickListener(onItemClickListener)
+        .onItemBindListener(onItemBindListener)
         .build();
 
     assertEquals(typeFactory, adapter.typeFactory);
     assertEquals(viewHolderFactory, adapter.viewHolderFactory);
     assertEquals(diffCallback, adapter.diffCallback);
     assertEquals(onItemClickListener, adapter.onItemClickListener);
+    assertEquals(onItemBindListener, adapter.onItemBindListener);
   }
 
   @Test

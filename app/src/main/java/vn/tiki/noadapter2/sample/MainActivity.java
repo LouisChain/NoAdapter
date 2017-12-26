@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Random;
 import vn.tiki.noadapter2.AbsViewHolder;
 import vn.tiki.noadapter2.DiffCallback;
+import vn.tiki.noadapter2.OnItemBindListener;
 import vn.tiki.noadapter2.OnItemClickListener;
 import vn.tiki.noadapter2.OnlyAdapter;
 import vn.tiki.noadapter2.TypeFactory;
@@ -23,7 +25,9 @@ import vn.tiki.noadapter2.sample.viewholder.ColorViewHolder;
 import vn.tiki.noadapter2.sample.viewholder.TextViewHolder;
 
 public class MainActivity extends AppCompatActivity {
+
   private static final Random RANDOM = new Random();
+  private static final String TAG = "MainActivity";
   private OnlyAdapter adapter;
   private List<Object> items;
 
@@ -34,22 +38,26 @@ public class MainActivity extends AppCompatActivity {
     final RecyclerView rvList = (RecyclerView) this.findViewById(R.id.rvList);
 
     findViewById(R.id.btAdd).setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
+      @Override
+      public void onClick(View v) {
         addItem();
       }
     });
     findViewById(R.id.btAdd100).setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
+      @Override
+      public void onClick(View v) {
         add100Items();
       }
     });
     findViewById(R.id.btClear).setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
+      @Override
+      public void onClick(View v) {
         clearItems();
       }
     });
     findViewById(R.id.btChange).setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
+      @Override
+      public void onClick(View v) {
         shuffleItems();
       }
     });
@@ -58,12 +66,14 @@ public class MainActivity extends AppCompatActivity {
 
     adapter = OnlyAdapter.builder()
         .typeFactory(new TypeFactory() {
-          @Override public int typeOf(Object item) {
+          @Override
+          public int typeOf(Object item) {
             return item instanceof Color ? 1 : 0;
           }
         })
         .viewHolderFactory(new ViewHolderFactory() {
-          @Override public AbsViewHolder viewHolderForType(ViewGroup parent, int type) {
+          @Override
+          public AbsViewHolder viewHolderForType(ViewGroup parent, int type) {
             switch (type) {
               case 1:
                 return ColorViewHolder.create(parent);
@@ -73,14 +83,16 @@ public class MainActivity extends AppCompatActivity {
           }
         })
         .onItemClickListener(new OnItemClickListener() {
-          @Override public void onItemClick(View view, Object item, int position) {
+          @Override
+          public void onItemClick(View view, Object item, int position) {
             Toast
                 .makeText(MainActivity.this, "Clicked on item: " + item, Toast.LENGTH_SHORT)
                 .show();
           }
         })
         .diffCallback(new DiffCallback() {
-          @Override public boolean areItemsTheSame(Object oldItem, Object newItem) {
+          @Override
+          public boolean areItemsTheSame(Object oldItem, Object newItem) {
             if (oldItem instanceof Color) {
               return newItem instanceof Color
                   && ((Color) oldItem).getId() == ((Color) newItem).getId();
@@ -89,8 +101,16 @@ public class MainActivity extends AppCompatActivity {
             }
           }
 
-          @Override public boolean areContentsTheSame(Object oldItem, Object newItem) {
+          @Override
+          public boolean areContentsTheSame(Object oldItem, Object newItem) {
             return oldItem.equals(newItem);
+          }
+        })
+        .onItemBindListener(new OnItemBindListener() {
+          @Override
+          public void onItemBind(View view, Object item, int position) {
+            Log.d(TAG, "onItemBind() called with: view = [" + view + "], item = [" + item
+                + "], position = [" + position + "]");
           }
         })
         .build();
@@ -130,7 +150,8 @@ public class MainActivity extends AppCompatActivity {
     return colors;
   }
 
-  @NonNull private Object randomItem(int i) {
+  @NonNull
+  private Object randomItem(int i) {
     Object item;
     if (i % 3 == 0) {
       item = "Text #" + i;

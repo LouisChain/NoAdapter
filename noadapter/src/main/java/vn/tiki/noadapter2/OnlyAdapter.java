@@ -15,13 +15,20 @@ import java.util.List;
  */
 public class OnlyAdapter extends RecyclerView.Adapter<AbsViewHolder> {
 
-  @VisibleForTesting final TypeFactory typeFactory;
-  @VisibleForTesting final ViewHolderFactory viewHolderFactory;
-  @VisibleForTesting final DiffCallback diffCallback;
-  @VisibleForTesting OnItemClickListener onItemClickListener;
+  @VisibleForTesting
+  final TypeFactory typeFactory;
+  @VisibleForTesting
+  final ViewHolderFactory viewHolderFactory;
+  @VisibleForTesting
+  final DiffCallback diffCallback;
+  @VisibleForTesting
+  OnItemClickListener onItemClickListener;
+  @VisibleForTesting
+  OnItemBindListener onItemBindListener;
   private int dataVersion;
   private List<?> items = null;
   private AsyncTask<Void, Void, DiffUtil.DiffResult> updateTask;
+
   private OnlyAdapter(
       @NonNull TypeFactory typeFactory,
       @NonNull ViewHolderFactory viewHolderFactory,
@@ -58,12 +65,14 @@ public class OnlyAdapter extends RecyclerView.Adapter<AbsViewHolder> {
   public void onBindViewHolder(AbsViewHolder holder, int position) {
     final Object item = items.get(position);
     holder.bind(item);
-    holder.setOnItemClickListener(onItemClickListener);
   }
 
   @Override
   public AbsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    return viewHolderFactory.viewHolderForType(parent, viewType);
+    final AbsViewHolder holder = viewHolderFactory.viewHolderForType(parent, viewType);
+    holder.setOnItemClickListener(onItemClickListener);
+    holder.setOnItemBindListener(onItemBindListener);
+    return holder;
   }
 
   @Override
@@ -119,10 +128,15 @@ public class OnlyAdapter extends RecyclerView.Adapter<AbsViewHolder> {
     this.onItemClickListener = onItemClickListener;
   }
 
+  private void setOnItemBindListener(@NonNull OnItemBindListener onItemBindListener) {
+    this.onItemBindListener = onItemBindListener;
+  }
+
   public static class Builder {
 
     private DiffCallback diffCallback;
     private OnItemClickListener onItemClickListener;
+    private OnItemBindListener onItemBindListener;
     private TypeFactory typeFactory;
     private ViewHolderFactory viewHolderFactory;
 
@@ -140,6 +154,9 @@ public class OnlyAdapter extends RecyclerView.Adapter<AbsViewHolder> {
       if (onItemClickListener != null) {
         adapter.setOnItemClickListener(onItemClickListener);
       }
+      if (onItemBindListener != null) {
+        adapter.setOnItemBindListener(onItemBindListener);
+      }
       return adapter;
     }
 
@@ -150,6 +167,11 @@ public class OnlyAdapter extends RecyclerView.Adapter<AbsViewHolder> {
 
     public Builder onItemClickListener(OnItemClickListener onItemClickListener) {
       this.onItemClickListener = onItemClickListener;
+      return this;
+    }
+
+    public Builder onItemBindListener(OnItemBindListener onItemBindListener) {
+      this.onItemBindListener = onItemBindListener;
       return this;
     }
 
