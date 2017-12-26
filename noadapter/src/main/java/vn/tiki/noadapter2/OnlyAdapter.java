@@ -8,21 +8,20 @@ import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
  * Created by Giang Nguyen on 8/14/16.
  */
 public class OnlyAdapter extends RecyclerView.Adapter<AbsViewHolder> {
+
   @VisibleForTesting final TypeFactory typeFactory;
   @VisibleForTesting final ViewHolderFactory viewHolderFactory;
   @VisibleForTesting final DiffCallback diffCallback;
   @VisibleForTesting OnItemClickListener onItemClickListener;
-  private List<?> items = Collections.emptyList();
   private int dataVersion;
+  private List<?> items = null;
   private AsyncTask<Void, Void, DiffUtil.DiffResult> updateTask;
-
   private OnlyAdapter(
       @NonNull TypeFactory typeFactory,
       @NonNull ViewHolderFactory viewHolderFactory,
@@ -44,8 +43,39 @@ public class OnlyAdapter extends RecyclerView.Adapter<AbsViewHolder> {
     return DiffUtil.calculateDiff(new DiffUtilCallback(oldItems, update, diffCallback));
   }
 
-  private void setOnItemClickListener(@NonNull OnItemClickListener onItemClickListener) {
-    this.onItemClickListener = onItemClickListener;
+  @Override
+  public int getItemCount() {
+    return items == null ? 0 : items.size();
+  }
+
+  @Override
+  public int getItemViewType(int position) {
+    final Object item = items.get(position);
+    return typeFactory.typeOf(item);
+  }
+
+  @Override
+  public void onBindViewHolder(AbsViewHolder holder, int position) {
+    final Object item = items.get(position);
+    holder.bind(item);
+    holder.setOnItemClickListener(onItemClickListener);
+  }
+
+  @Override
+  public AbsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    return viewHolderFactory.viewHolderForType(parent, viewType);
+  }
+
+  @Override
+  public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
+    super.onDetachedFromRecyclerView(recyclerView);
+    cancelUpdateTask();
+  }
+
+  @Override
+  public void onViewRecycled(AbsViewHolder holder) {
+    super.onViewRecycled(holder);
+    holder.unbind();
   }
 
   public void setItems(final List<?> newItems) {
@@ -55,7 +85,7 @@ public class OnlyAdapter extends RecyclerView.Adapter<AbsViewHolder> {
       if (newItems == null) {
         return;
       }
-      items = newItems;
+      items = new ArrayList<>(newItems);
       notifyDataSetChanged();
     } else if (newItems == null) {
       int oldSize = items.size();
@@ -85,65 +115,16 @@ public class OnlyAdapter extends RecyclerView.Adapter<AbsViewHolder> {
     diffResult.dispatchUpdatesTo(OnlyAdapter.this);
   }
 
-  @Override
-  public AbsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    return viewHolderFactory.viewHolderForType(parent, viewType);
-  }
-
-  @Override
-  public void onBindViewHolder(AbsViewHolder holder, int position) {
-    final Object item = items.get(position);
-    holder.bind(item);
-    holder.setOnItemClickListener(onItemClickListener);
-  }
-
-  @Override
-  public int getItemViewType(int position) {
-    final Object item = items.get(position);
-    return typeFactory.typeOf(item);
-  }
-
-  @Override
-  public int getItemCount() {
-    return items == null ? 0 : items.size();
-  }
-
-  @Override public void onViewRecycled(AbsViewHolder holder) {
-    super.onViewRecycled(holder);
-    holder.unbind();
-  }
-
-  @Override public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
-    super.onDetachedFromRecyclerView(recyclerView);
-    cancelUpdateTask();
+  private void setOnItemClickListener(@NonNull OnItemClickListener onItemClickListener) {
+    this.onItemClickListener = onItemClickListener;
   }
 
   public static class Builder {
 
-    private ViewHolderFactory viewHolderFactory;
-    private TypeFactory typeFactory;
-    private OnItemClickListener onItemClickListener;
     private DiffCallback diffCallback;
-
-    public Builder typeFactory(TypeFactory typeFactory) {
-      this.typeFactory = typeFactory;
-      return this;
-    }
-
-    public Builder viewHolderFactory(ViewHolderFactory viewHolderFactory) {
-      this.viewHolderFactory = viewHolderFactory;
-      return this;
-    }
-
-    public Builder onItemClickListener(OnItemClickListener onItemClickListener) {
-      this.onItemClickListener = onItemClickListener;
-      return this;
-    }
-
-    public Builder diffCallback(DiffCallback diffCallback) {
-      this.diffCallback = diffCallback;
-      return this;
-    }
+    private OnItemClickListener onItemClickListener;
+    private TypeFactory typeFactory;
+    private ViewHolderFactory viewHolderFactory;
 
     public OnlyAdapter build() {
       if (viewHolderFactory == null) {
@@ -161,14 +142,35 @@ public class OnlyAdapter extends RecyclerView.Adapter<AbsViewHolder> {
       }
       return adapter;
     }
+
+    public Builder diffCallback(DiffCallback diffCallback) {
+      this.diffCallback = diffCallback;
+      return this;
+    }
+
+    public Builder onItemClickListener(OnItemClickListener onItemClickListener) {
+      this.onItemClickListener = onItemClickListener;
+      return this;
+    }
+
+    public Builder typeFactory(TypeFactory typeFactory) {
+      this.typeFactory = typeFactory;
+      return this;
+    }
+
+    public Builder viewHolderFactory(ViewHolderFactory viewHolderFactory) {
+      this.viewHolderFactory = viewHolderFactory;
+      return this;
+    }
   }
 
   private static class UpdateTask extends AsyncTask<Void, Void, DiffUtil.DiffResult> {
-    private final List<?> oldItems;
-    private final List<?> newItems;
-    private final DiffCallback diffCallback;
+
     private final WeakReference<OnlyAdapter> adapterRef;
     private final int dataVersion;
+    private final DiffCallback diffCallback;
+    private final List<?> newItems;
+    private final List<?> oldItems;
 
     UpdateTask(
         List<?> oldItems,
@@ -182,7 +184,8 @@ public class OnlyAdapter extends RecyclerView.Adapter<AbsViewHolder> {
       dataVersion = adapter.dataVersion;
     }
 
-    @Override protected DiffUtil.DiffResult doInBackground(Void... params) {
+    @Override
+    protected DiffUtil.DiffResult doInBackground(Void... params) {
       return calculateDiff(oldItems, newItems, diffCallback);
     }
 
